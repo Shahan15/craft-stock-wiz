@@ -260,7 +260,7 @@ export default function Integrations() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="craft-card transform rotate-1 hover:rotate-0 transition-transform duration-300">
+          <Card className="craft-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Active Integrations</CardTitle>
               <Link className="h-4 w-4 text-muted-foreground" />
@@ -273,7 +273,7 @@ export default function Integrations() {
             </CardContent>
           </Card>
 
-          <Card className="craft-card transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+          <Card className="craft-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Recent Syncs</CardTitle>
               <TrendingUp className="h-4 w-4 text-muted-foreground" />
@@ -286,7 +286,7 @@ export default function Integrations() {
             </CardContent>
           </Card>
 
-          <Card className="craft-card transform rotate-1 hover:rotate-0 transition-transform duration-300">
+          <Card className="craft-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Sync Status</CardTitle>
               <Settings className="h-4 w-4 text-muted-foreground" />
@@ -330,7 +330,7 @@ export default function Integrations() {
 
         {/* Recent Activity */}
         {syncLogs.length > 0 && (
-          <Card className="craft-card transform -rotate-1 hover:rotate-0 transition-transform duration-300">
+          <Card className="craft-card">
             <CardHeader>
               <CardTitle className="relative inline-block">
                 Recent Sync Activity
