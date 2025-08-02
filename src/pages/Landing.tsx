@@ -148,7 +148,7 @@ function Hero() {
           </div>
 
           <div className="lg:col-span-5 relative">
-            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+            <div className="craft-card p-8 rounded-2xl transform rotate-2 hover:rotate-3 transition-all duration-300">
               <div className="handwritten text-2xl text-amber-800 mb-6 flex items-center justify-between">
                 Recipe Builder
                 <Sparkles className="w-6 h-6 text-orange-400" />
@@ -160,7 +160,7 @@ function Hero() {
                   <span className="text-gray-700">1 × Silver Chain</span>
                 </div>
                 
-                <div className="text-center text-2xl text-orange-500 font-light">+</div>
+                <div className="text-center text-2xl text-orange-500 font-light handwritten">+</div>
                 
                 <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border-l-4 border-orange-400">
                   <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
@@ -171,7 +171,7 @@ function Hero() {
                   </div>
                 </div>
                 
-                <div className="text-center text-2xl text-gray-400 font-light">=</div>
+                <div className="text-center text-2xl text-gray-400 font-light handwritten">=</div>
                 
                 <div className="flex items-center space-x-3 p-4 bg-teal-50 rounded-lg border border-teal-200">
                   <Sparkles className="w-5 h-5 text-teal-600" />
@@ -193,25 +193,29 @@ function Features() {
       name: 'Recipe Magic',
       description: 'Build products from materials with our visual recipe builder. Set it once, forget the math forever.',
       icon: Package,
-      accent: 'teal'
+      accent: 'teal',
+      rotation: 'rotate-1'
     },
     {
       name: 'Smart Deduction',
       description: 'Every sale automatically updates your material stock. No spreadsheets, no manual tracking.',
       icon: Zap,
-      accent: 'orange'
+      accent: 'orange',
+      rotation: '-rotate-2'
     },
     {
       name: 'Low Stock Alerts',
       description: 'Never run out of beads again. Get notified when materials are running low.',
       icon: Bell,
-      accent: 'teal'
+      accent: 'teal',
+      rotation: 'rotate-2'
     },
     {
       name: 'Craft-Focused Design',
       description: 'Built specifically for makers, creators, and artisans. We understand your workflow.',
       icon: Palette,
-      accent: 'orange'
+      accent: 'orange',
+      rotation: '-rotate-1'
     },
   ];
 
@@ -239,12 +243,15 @@ function Features() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {features.map((feature, index) => (
-            <div key={index} className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+            <div key={index} className={`craft-card p-8 rounded-2xl transform ${feature.rotation} hover:scale-105 hover:shadow-xl transition-all duration-300 group`}>
               <div className={`w-16 h-16 rounded-2xl ${feature.accent === 'teal' ? 'bg-teal-50' : 'bg-orange-50'} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-200`}>
                 <feature.icon className={`w-8 h-8 ${feature.accent === 'teal' ? 'text-teal' : 'text-craft-orange'}`} />
               </div>
-              <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-teal transition-colors">
+              <h3 className="relative inline-block text-2xl font-bold text-gray-900 mb-4 group-hover:text-teal transition-colors">
                 {feature.name}
+                <svg className="absolute -bottom-1 left-0 w-full h-2" viewBox="0 0 100 8" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2 5 Q 50 1 98 4" stroke={feature.accent === 'teal' ? '#5a8a8a' : '#e67e22'} strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+                </svg>
               </h3>
               <p className="text-gray-600 leading-relaxed">
                 {feature.description}
@@ -264,24 +271,28 @@ function HowItWorks() {
       title: 'Sign Up & Set Up',
       description: 'Create your account and set up your business profile.',
       icon: Star,
+      rotation: 'rotate-1'
     },
     {
       number: '2',
       title: 'Add Materials & Products',
       description: 'Input your raw materials and finished products with details and quantities.',
       icon: Heart,
+      rotation: '-rotate-1'
     },
     {
       number: '3',
       title: 'Manage Recipes & Orders',
       description: 'Link materials to products and track incoming orders.',
       icon: Link,
+      rotation: 'rotate-2'
     },
     {
       number: '4',
       title: 'Analyze & Optimize',
       description: 'Use our analytics to optimize your inventory and boost your profits.',
       icon: Zap,
+      rotation: '-rotate-2'
     },
   ];
 
@@ -291,12 +302,17 @@ function HowItWorks() {
         <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">How It Works</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, index) => (
-            <div key={index} className="relative p-8 bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 text-center">
-              <div className="w-12 h-12 bg-teal text-white font-bold text-xl rounded-full flex items-center justify-center mx-auto mb-6">
+            <div key={index} className={`craft-card p-8 rounded-2xl transform ${step.rotation} hover:scale-105 hover:shadow-xl transition-all duration-300 text-center group`}>
+              <div className="w-12 h-12 bg-teal text-white font-bold text-xl rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-200">
                 {step.number}
               </div>
               <step.icon className="w-8 h-8 text-teal mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">{step.title}</h3>
+              <h3 className="relative inline-block text-xl font-semibold text-gray-900 mb-3">
+                {step.title}
+                <svg className="absolute -bottom-1 left-0 w-full h-1.5" viewBox="0 0 100 6" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M2 3 Q 50 1 98 3" stroke="#5a8a8a" strokeWidth="1" fill="none" strokeLinecap="round"/>
+                </svg>
+              </h3>
               <p className="text-gray-600 leading-relaxed">{step.description}</p>
             </div>
           ))}
