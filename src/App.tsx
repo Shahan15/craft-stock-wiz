@@ -3,6 +3,7 @@ import { useAuth } from './hooks/useAuth'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import AuthPage from './pages/Auth'
 import Dashboard from './pages/Dashboard'
+import Materials from './pages/Materials'
 import LandingPage from './pages/Landing'
 
 function App() {
@@ -27,6 +28,11 @@ function App() {
         <Route path="/dashboard" element={
           <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="/materials" element={
+          <ProtectedRoute>
+            <Materials />
           </ProtectedRoute>
         } />
       </Routes>
