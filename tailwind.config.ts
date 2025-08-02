@@ -73,6 +73,10 @@ export default {
 				'craft-cream': 'hsl(var(--color-craft-cream))',
 				'craft-paper': 'hsl(var(--color-craft-paper))',
 			},
+			fontFamily: {
+				inter: ['Inter', 'sans-serif'],
+				handwritten: ['Caveat', 'cursive'],
+			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
