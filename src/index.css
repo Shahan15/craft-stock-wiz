@@ -29,13 +29,13 @@
     --radius: 0.5rem;
 
     /* Custom Stock-Kit colors */
-    --teal: 180 25% 50%;
-    --teal-light: 180 30% 58%;
-    --teal-dark: 180 25% 38%;
-    --craft-orange: 24 85% 53%;
-    --craft-brown: 25 60% 31%;
-    --craft-cream: 48 17% 95%;
-    --craft-paper: 40 20% 96%;
+    --teal: #5a8a8a;
+    --teal-light: #7ba5a5;
+    --teal-dark: #4a7373;
+    --craft-orange: #e67e22;
+    --craft-brown: #8b4513;
+    --craft-cream: #f5f4f0;
+    --craft-paper: #f8f6f0;
 
     /* Craft-Inspired Gradients */
     --gradient-craft-teal: linear-gradient(135deg, hsl(180 25% 50%), hsl(175 30% 45%));
@@ -106,16 +106,12 @@
 
 /* Custom utility classes & animations */
 .craft-card {
-  background: linear-gradient(145deg, hsl(var(--craft-cream)) 0%, hsl(var(--card)) 30%, hsl(var(--craft-paper)) 100%);
-  border: 2px solid hsl(var(--teal) / 0.15);
-  border-radius: 12px;
+  background: linear-gradient(145deg, #ffffff 0%, #fdfcf8 100%);
+  border: 1px solid rgba(90, 138, 138, 0.1);
   box-shadow: 
-    0 8px 25px -5px hsl(var(--teal) / 0.1),
-    0 4px 6px -2px hsl(var(--craft-orange) / 0.05),
-    inset 0 1px 0 hsl(var(--card) / 0.8),
-    inset 0 0 40px hsl(var(--craft-cream) / 0.3);
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
   position: relative;
-  overflow: hidden;
 }
 
 .craft-card::before {
@@ -125,13 +121,9 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 20%, hsl(var(--teal) / 0.08) 0%, transparent 30%),
-    radial-gradient(circle at 80% 80%, hsl(var(--craft-orange) / 0.06) 0%, transparent 30%),
-    url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000' fill-opacity='0.03'%3E%3Cpath d='M3 3h2v2H3zM7 7h2v2H7zM11 11h2v2h-2zM15 15h2v2h-2zM19 19h2v2h-2z'/%3E%3Cpath d='M5 1h1v1H5zM9 5h1v1H9zM13 9h1v1h-1zM17 13h1v1h-1zM21 17h1v1h-1z'/%3E%3C/g%3E%3C/svg%3E");
+  background: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000' fill-opacity='0.02'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3Ccircle cx='13' cy='13' r='1'/%3E%3Ccircle cx='17' cy='7' r='1'/%3E%3Ccircle cx='7' cy='17' r='1'/%3E%3C/g%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 0;
-  border-radius: 10px;
 }
 
 .craft-card > * {

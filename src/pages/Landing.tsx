@@ -88,17 +88,88 @@ function Navigation() {
 
 function Hero() {
   return (
-    <section className="py-24 md:py-32 bg-craft-paper-light">
-      <div className="container mx-auto px-6 text-center">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-          Craft Your Success with <span className="text-teal">Stock-Kit</span>
-        </h1>
-        <p className="text-lg md:text-xl text-gray-700 mb-12">
-          The ultimate inventory management solution for makers, artisans, and small businesses.
-        </p>
-        <Button className="bg-teal hover:bg-teal-dark text-white py-3 px-8 text-lg transform hover:scale-105 transition-all duration-200">
-          Get Started Free
-        </Button>
+    <section className="relative px-6 py-16 lg:px-12 lg:py-24 overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute top-20 left-10 w-32 h-32 organic-blob opacity-20 floating"></div>
+      <div className="absolute bottom-32 right-16 w-24 h-24 organic-blob-2 opacity-15 floating" style={{animationDelay: '2s'}}></div>
+      <div className="absolute top-1/2 left-1/4 w-2 h-2 bg-craft-orange rounded-full floating" style={{animationDelay: '1s'}}></div>
+      <div className="absolute top-1/3 right-1/3 w-3 h-3 bg-teal rounded-full floating" style={{animationDelay: '3s'}}></div>
+
+      <div className="relative z-10 mx-auto max-w-6xl">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <div className="lg:col-span-7">
+            <div className="relative inline-block mb-8">
+              <Badge variant="secondary" className="bg-teal/10 text-teal border-teal/30 px-4 py-2 text-sm font-medium transform -rotate-1">
+                Revolutionary Recipe-Based Inventory
+              </Badge>
+              <Sparkles className="absolute -top-2 -right-2 w-5 h-5 text-craft-orange" />
+            </div>
+
+            <h1 className="text-5xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight">
+              Automatically 
+              <span className="relative inline-block mx-3">
+                <span className="text-teal">Deduct</span>
+                <svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 200 12" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M5 8 Q 100 2 195 6" stroke="currentColor" strokeWidth="3" fill="none" className="text-teal opacity-60"/>
+                </svg>
+              </span>
+              Materials with Every Sale
+            </h1>
+
+            <div className="text-lg leading-relaxed text-gray-700 mb-12 max-w-2xl space-y-3">
+              <p className="flex items-start space-x-2">
+                <Link className="w-5 h-5 text-teal mt-1 flex-shrink-0" />
+                <span>Build simple product recipes like <span className="font-semibold text-teal">"1 chain + 5 beads = 1 necklace"</span></span>
+              </p>
+              <p className="flex items-start space-x-2">
+                <Zap className="w-5 h-5 text-craft-orange mt-1 flex-shrink-0" />
+                <span>then watch stock levels update themselves—<span className="font-semibold">no more guesswork.</span></span>
+              </p>
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-6 items-start">
+              <Button 
+                size="lg" 
+                className="bg-teal hover:bg-teal-dark text-white px-8 py-4 text-lg font-semibold transform hover:scale-105 transition-all duration-200 shadow-lg"
+              >
+                <Heart className="w-5 h-5 mr-2" />
+                Start Free Trial
+              </Button>
+              <button className="flex items-center space-x-3 text-gray-700 hover:text-teal transition-colors group">
+                <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-teal/10 transition-colors">
+                  <Play className="w-5 h-5 ml-1" />
+                </div>
+                <div className="text-left">
+                  <div className="text-sm font-medium">Watch 2-min Demo</div>
+                  <div className="text-xs text-gray-500">See it in action</div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 relative">
+            <div className="craft-card p-8 transform rotate-3 shadow-xl">
+              <div className="handwritten text-2xl text-craft-brown mb-4">Recipe Builder</div>
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3 p-3 bg-craft-cream rounded-lg">
+                  <Circle className="w-4 h-4 text-teal fill-current" />
+                  <span className="text-sm">1 × Silver Chain</span>
+                </div>
+                <div className="text-center text-2xl text-teal">+</div>
+                <div className="flex items-center space-x-3 p-3 bg-craft-cream rounded-lg">
+                  <Circle className="w-4 h-4 text-craft-orange fill-current" />
+                  <span className="text-sm">5 × Glass Beads</span>
+                </div>
+                <div className="text-center text-2xl text-gray-400">=</div>
+                <div className="flex items-center space-x-3 p-3 bg-teal/10 rounded-lg border-2 border-teal/30">
+                  <Sparkles className="w-4 h-4 text-teal" />
+                  <span className="text-sm font-semibold text-teal">1 × Beaded Necklace</span>
+                </div>
+              </div>
+            </div>
+            <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-craft-orange/20 rounded-full blur-xl"></div>
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -107,37 +178,65 @@ function Hero() {
 function Features() {
   const features = [
     {
-      name: 'Real-time Inventory Tracking',
-      description: 'Always know your stock levels. Get alerts when materials are low.',
+      name: 'Recipe Magic',
+      description: 'Build products from materials with our visual recipe builder. Set it once, forget the math forever.',
       icon: Package,
+      accent: 'teal'
     },
     {
-      name: 'Product Recipe Management',
-      description: 'Easily create and manage product recipes, linking materials to finished goods.',
+      name: 'Smart Deduction',
+      description: 'Every sale automatically updates your material stock. No spreadsheets, no manual tracking.',
+      icon: Zap,
+      accent: 'orange'
+    },
+    {
+      name: 'Low Stock Alerts',
+      description: 'Never run out of beads again. Get notified when materials are running low.',
+      icon: Bell,
+      accent: 'teal'
+    },
+    {
+      name: 'Craft-Focused Design',
+      description: 'Built specifically for makers, creators, and artisans. We understand your workflow.',
       icon: Palette,
-    },
-    {
-      name: 'Order Management',
-      description: 'Track orders, sales, and customer information in one central place.',
-      icon: ShoppingCart,
-    },
-    {
-      name: 'Insightful Analytics',
-      description: 'Gain insights into your business with sales trends, material usage, and more.',
-      icon: Sparkles,
+      accent: 'orange'
     },
   ];
 
   return (
-    <section id="features" className="py-16 md:py-24">
+    <section id="features" className="py-24 relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal via-craft-orange to-teal opacity-30"></div>
+      
       <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">Key Features</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="text-center mb-16">
+          <div className="inline-block relative mb-4">
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900">
+              Why Makers <span className="text-teal">Love</span> Stock-Kit
+            </h2>
+            <div className="absolute -top-4 -right-8 w-8 h-8 text-craft-orange floating">
+              <Heart className="w-full h-full fill-current" />
+            </div>
+          </div>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            Stop wrestling with complex inventory systems. 
+            <span className="handwritten text-2xl text-teal block mt-2 transform rotate-1">
+              Finally, software that gets creativity.
+            </span>
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {features.map((feature, index) => (
-            <div key={index} className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-              <feature.icon className="w-8 h-8 text-teal mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">{feature.name}</h3>
-              <p className="text-gray-600">{feature.description}</p>
+            <div key={index} className="craft-card p-8 hover:shadow-xl transition-all duration-300 group thread-connection">
+              <div className={`w-16 h-16 rounded-2xl bg-${feature.accent === 'teal' ? 'teal' : 'craft-orange'}/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-200`}>
+                <feature.icon className={`w-8 h-8 text-${feature.accent === 'teal' ? 'teal' : 'craft-orange'}`} />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-teal transition-colors">
+                {feature.name}
+              </h3>
+              <p className="text-gray-600 leading-relaxed">
+                {feature.description}
+              </p>
             </div>
           ))}
         </div>
