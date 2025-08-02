@@ -30,7 +30,7 @@ interface RecentOrder {
   order_date: string
   products: {
     name: string
-  }
+  } | null
 }
 
 export default function Dashboard() {
@@ -70,13 +70,16 @@ export default function Dashboard() {
           id,
           quantity_sold,
           order_date,
-          products (name)
+          products!inner(name)
         `)
         .eq('user_id', user?.id)
         .order('created_at', { ascending: false })
         .limit(5)
 
-      setRecentOrders(orders || [])
+      setRecentOrders((orders || []).map(order => ({
+        ...order,
+        products: Array.isArray(order.products) ? order.products[0] : order.products
+      })))
 
       // Fetch stats
       const [materialsCount, productsCount, ordersCount] = await Promise.all([
@@ -250,7 +253,7 @@ export default function Dashboard() {
                 {recentOrders.map((order) => (
                   <div key={order.id} className="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-lg">
                     <div>
-                      <p className="font-medium text-green-900">{order.products.name}</p>
+                      <p className="font-medium text-green-900">{order.products?.name || 'Unknown Product'}</p>
                       <p className="text-green-700 text-sm">
                         {new Date(order.order_date).toLocaleDateString()}
                       </p>
