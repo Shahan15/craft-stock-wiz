@@ -5,6 +5,10 @@ import AuthPage from './pages/Auth'
 import Dashboard from './pages/Dashboard'
 import Materials from './pages/Materials'
 import Products from './pages/Products'
+import Orders from './pages/Orders'
+import Recipes from './pages/Recipes'
+import Profile from './pages/Profile'
+import Analytics from './pages/Analytics'
 import LandingPage from './pages/Landing'
 
 function App() {
@@ -39,6 +43,26 @@ function App() {
         <Route path="/products" element={
           <ProtectedRoute>
             <Products />
+          </ProtectedRoute>
+        } />
+        <Route path="/orders" element={
+          <ProtectedRoute>
+            <Orders />
+          </ProtectedRoute>
+        } />
+        <Route path="/recipes" element={
+          <ProtectedRoute>
+            <Recipes />
+          </ProtectedRoute>
+        } />
+        <Route path="/analytics" element={
+          <ProtectedRoute>
+            <Analytics />
+          </ProtectedRoute>
+        } />
+        <Route path="/profile" element={
+          <ProtectedRoute>
+            <Profile />
           </ProtectedRoute>
         } />
       </Routes>
