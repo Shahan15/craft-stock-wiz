@@ -8,16 +8,16 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-craft-teal text-white hover:bg-craft-teal-dark shadow-lg hover:shadow-xl transform hover:scale-105 text-lg",
+        default: "bg-teal text-white hover:bg-teal-dark shadow-lg hover:shadow-xl text-lg",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "border-2 border-craft-teal text-craft-teal bg-white hover:bg-craft-teal hover:text-white text-lg",
+          "border-2 border-teal text-teal bg-white hover:bg-teal hover:text-white text-lg",
         secondary:
           "bg-craft-cream text-foreground hover:bg-gray-100 border border-gray-200 text-lg",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-craft-teal underline-offset-4 hover:underline font-medium text-lg",
-        "craft-outline": "border-2 border-craft-teal text-craft-teal bg-white hover:bg-craft-teal hover:text-white text-lg",
+        "craft-outline": "border-2 border-teal text-teal bg-white hover:bg-teal hover:text-white text-lg",
         "craft-warm": "bg-craft-orange text-white hover:bg-craft-brown shadow-lg hover:shadow-xl transform hover:scale-105 text-lg",
       },
       size: {
