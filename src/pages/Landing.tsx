@@ -205,7 +205,7 @@ function Features() {
 
   return (
     <section id="features" className="py-24 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal via-craft-orange to-teal opacity-30"></div>
+      
       
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
