@@ -1,54 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Craft-Inspired Design System - Moving away from generic SaaS */
-
 @layer base {
   :root {
-    /* Exact Color Palette - Pixel Perfect */
-    --background: 44 18% 96%; /* #F8F6F0 - Paper Background */
-    --foreground: 213 24% 18%; /* #1F2D3D - Body Text */
-
-    --card: 0 0% 100%; /* #FFFFFF */
-    --card-foreground: 213 24% 18%;
-
+    --background: 252 6% 97.8%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 213 24% 18%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+    --radius: 0.5rem;
 
-    /* Primary Teal - Exact #5A8A8A */
-    --primary: 180 21% 45%; /* #5A8A8A */
-    --primary-foreground: 0 0% 100%;
-
-    /* Cream Card Background - Exact #F5F4F0 */
-    --secondary: 44 18% 95%; /* #F5F4F0 */
-    --secondary-foreground: 213 24% 18%;
-
-    --muted: 44 18% 95%;
-    --muted-foreground: 213 15% 45%;
-
-    /* Accent Orange - Exact #E67E22 */
-    --accent: 22 77% 52%; /* #E67E22 */
-    --accent-foreground: 0 0% 100%;
-
-    /* Pixel Perfect Design Colors */
-    --color-primary-teal: 180 21% 45%; /* #5A8A8A */
-    --color-teal-light: 180 23% 56%; /* #7BA5A5 */
-    --color-teal-dark: 180 22% 37%; /* #4A7373 */
-    --color-accent-orange: 22 77% 52%; /* #E67E22 */
-    --color-accent-brown: 22 68% 31%; /* #8B4513 */
-    --color-cream-bg: 44 18% 95%; /* #F5F4F0 */
-    --color-paper-bg: 44 18% 96%; /* #F8F6F0 */
-
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
-
-    --border: 35 15% 85%;
-    --input: 35 15% 90%;
-    --ring: 180 25% 50%;
-
-    --radius: 1rem;
+    /* Custom Stock-Kit colors */
+    --teal: #5a8a8a;
+    --teal-light: #7ba5a5;
+    --teal-dark: #4a7373;
+    --craft-orange: #e67e22;
+    --craft-brown: #8b4513;
+    --craft-cream: #f5f4f0;
+    --craft-paper: #f8f6f0;
 
     /* Craft-Inspired Gradients */
     --gradient-craft-teal: linear-gradient(135deg, hsl(180 25% 50%), hsl(175 30% 45%));
@@ -77,45 +64,25 @@
   }
 
   .dark {
-    --background: 210 25% 8%;
-    --foreground: 35 15% 92%;
-
-    --card: 210 25% 10%;
-    --card-foreground: 35 15% 92%;
-
-    --popover: 210 25% 10%;
-    --popover-foreground: 35 15% 92%;
-
-    --primary: 180 25% 60%;
-    --primary-foreground: 210 25% 8%;
-
-    --secondary: 210 20% 15%;
-    --secondary-foreground: 35 15% 92%;
-
-    --muted: 210 20% 15%;
-    --muted-foreground: 35 10% 65%;
-
-    --accent: 25 85% 65%;
-    --accent-foreground: 210 25% 8%;
-
-    --craft-brown: 25 35% 45%;
-    --craft-brown-foreground: 35 15% 92%;
-
-    --destructive: 0 84% 65%;
-    --destructive-foreground: 210 25% 8%;
-
-    --border: 210 20% 20%;
-    --input: 210 20% 15%;
-    --ring: 180 25% 60%;
-
-    --sidebar-background: 210 25% 6%;
-    --sidebar-foreground: 35 15% 90%;
-    --sidebar-primary: 180 25% 55%;
-    --sidebar-primary-foreground: 210 25% 8%;
-    --sidebar-accent: 210 20% 12%;
-    --sidebar-accent-foreground: 35 15% 90%;
-    --sidebar-border: 210 20% 18%;
-    --sidebar-ring: 180 25% 60%;
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
   }
 }
 
@@ -126,185 +93,74 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-    background-image: var(--paper-texture);
-  }
-  
-  html {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-  }
-}
-
-@layer components {
-  /* Pixel Perfect Typography System */
-  .text-h1 {
-    font-size: 3rem; /* 48px */
-    font-weight: 700;
-    line-height: 1.25;
-  }
-  
-  @media (min-width: 1024px) {
-    .text-h1 {
-      font-size: 5rem; /* 80px */
-    }
-  }
-  
-  .text-h2 {
-    font-size: 2.25rem; /* 36px */
-    font-weight: 700;
-    line-height: 1.25;
-  }
-  
-  @media (min-width: 1024px) {
-    .text-h2 {
-      font-size: 3rem; /* 48px */
-    }
-  }
-  
-  .text-h3 {
-    font-size: 1.25rem; /* 20px */
-    font-weight: 700;
-    line-height: 1.5;
-  }
-  
-  .text-body {
-    font-size: 1.125rem; /* 18px */
-    font-weight: 400;
-    line-height: 1.6;
-  }
-  
-  .text-button {
-    font-size: 1.125rem; /* 18px */
-    font-weight: 600;
-  }
-  
-  .text-badge {
-    font-size: 0.875rem; /* 14px */
-    font-weight: 500;
-  }
-  
-  .text-script {
-    font-family: 'Caveat', cursive;
-    font-size: 1.5rem; /* 24px */
-    font-weight: 400;
-    color: hsl(var(--color-accent-brown));
-  }
-
-  /* Pixel Perfect Card System */
-  .feature-card {
-    background-color: hsl(var(--color-cream-bg));
-    border: 1px solid hsla(180, 21%, 45%, 0.1);
-    border-radius: 0.625rem; /* 10px */
-    padding: 2rem; /* 32px */
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  }
-  
-  .hero-mockup {
-    background: linear-gradient(135deg, #FFFFFF 0%, #FDFCF8 100%);
-    border-radius: 0.625rem; /* 10px */
-    transform: rotate(-5deg);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Layout System */
-  .section-padding {
-    padding-top: 5rem; /* 80px */
-    padding-bottom: 5rem; /* 80px */
-  }
-  
-  .container-padding {
-    padding-left: 1.5rem; /* 24px mobile */
-    padding-right: 1.5rem; /* 24px mobile */
-  }
-  
-  @media (min-width: 1024px) {
-    .container-padding {
-      padding-left: 3rem; /* 48px desktop */
-      padding-right: 3rem; /* 48px desktop */
-    }
-  }
-  
-  .grid-gap {
-    gap: 2rem; /* 32px mobile */
-  }
-  
-  @media (min-width: 1024px) {
-    .grid-gap {
-      gap: 3rem; /* 48px desktop */
-    }
-  }
-  
-  /* Interactive Elements */
-  .craft-hover {
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-  
-  .craft-hover:hover {
-    transform: translateY(-4px) rotate(1deg);
-  }
-  
-  /* Decorative Elements */
-  .decorative-dot {
-    @apply w-2 h-2 bg-accent-orange rounded-full;
-  }
-  
-  /* Hand-drawn underline */
-  .hand-underline {
-    position: relative;
-  }
-  
-  .hand-underline::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: -5px;
-    right: -5px;
-    height: 8px;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 12'%3E%3Cpath d='M5,6 Q50,2 100,6 T200,6 Q250,4 295,6' stroke='%23E67E22' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") center/cover no-repeat;
-    opacity: 0.8;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--craft-paper);
+    background-image: 
+      radial-gradient(circle at 20% 80%, rgba(90, 138, 138, 0.08) 0%, transparent 20%),
+      radial-gradient(circle at 80% 20%, rgba(230, 126, 34, 0.06) 0%, transparent 20%),
+      radial-gradient(circle at 40% 40%, rgba(139, 69, 19, 0.04) 0%, transparent 15%),
+      url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000' fill-opacity='0.01'%3E%3Cpath d='M20 20c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10zm10 0c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10z'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 100px 100px, 120px 120px, 80px 80px, 40px 40px;
   }
 }
 
-@layer utilities {
-  @keyframes craft-float {
-    0%, 100% { transform: translateY(0px) rotate(-2deg); }
-    50% { transform: translateY(-15px) rotate(2deg); }
-  }
-  
-  @keyframes gentle-pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-  }
-  
-  @keyframes gradient-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-  }
-  
-  @keyframes wiggle {
-    0%, 100% { transform: rotate(-2deg); }
-    50% { transform: rotate(2deg); }
-  }
-  
-  .animate-wiggle {
-    animation: wiggle 2s ease-in-out infinite;
-  }
-  
-  .animate-gentle-pulse {
-    animation: gentle-pulse 3s ease-in-out infinite;
-  }
-  
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient-shift 4s ease infinite;
-  }
-  
-  /* Craft-specific utilities */
-  .aspect-golden {
-    aspect-ratio: 1.618 / 1;
-  }
-  
-  .text-shadow-craft {
-    text-shadow: 2px 2px 4px hsl(var(--primary) / 0.2);
-  }
+/* Custom utility classes & animations */
+.craft-card {
+  background: linear-gradient(145deg, #ffffff 0%, #fdfcf8 100%);
+  border: 1px solid rgba(90, 138, 138, 0.1);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  position: relative;
+}
+
+.craft-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23000' fill-opacity='0.02'%3E%3Ccircle cx='3' cy='3' r='1'/%3E%3Ccircle cx='13' cy='13' r='1'/%3E%3Ccircle cx='17' cy='7' r='1'/%3E%3Ccircle cx='7' cy='17' r='1'/%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.craft-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.handwritten {
+  font-family: 'Caveat', cursive;
+}
+
+.floating {
+  animation: float 6s ease-in-out infinite;
+}
+
+.organic-blob {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  background: linear-gradient(45deg, var(--teal-light), var(--teal));
+}
+
+.organic-blob-2 {
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  background: linear-gradient(45deg, var(--craft-orange), rgba(230, 126, 34, 0.8));
+}
+
+.thread-connection {
+  position: relative;
+}
+
+.thread-connection::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -20px;
+  width: 40px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--teal) 0%, transparent 100%);
+  transform: translateY(-50%) rotate(-5deg);
+  z-index: 0;
 }
