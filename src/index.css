@@ -7,34 +7,39 @@
 
 @layer base {
   :root {
-    /* Craft Color Palette */
-    --background: 35 15% 96%; /* Warm cream/paper */
-    --foreground: 210 25% 15%; /* Dark charcoal */
+    /* Exact Color Palette from Design */
+    --background: 44 10% 97%; /* #F8F6F0 - craft-paper */
+    --foreground: 213 25% 17%; /* #1F2D3D - main text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 210 25% 15%;
+    --card: 0 0% 100%; /* #FFFFFF */
+    --card-foreground: 213 25% 17%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 25% 15%;
+    --popover-foreground: 213 25% 17%;
 
     /* Craft Teal - Primary */
-    --primary: 180 25% 50%;
+    --primary: 180 21% 45%; /* #5A8A8A */
     --primary-foreground: 0 0% 100%;
 
-    /* Warm Paper - Secondary */
-    --secondary: 35 25% 90%;
-    --secondary-foreground: 210 25% 15%;
+    /* Craft Cream - Secondary */
+    --secondary: 44 18% 95%; /* #F5F4F0 */
+    --secondary-foreground: 213 25% 17%;
 
-    --muted: 35 15% 92%;
-    --muted-foreground: 210 15% 45%;
+    --muted: 44 18% 95%;
+    --muted-foreground: 213 15% 45%;
 
     /* Craft Orange - Accent */
-    --accent: 25 85% 60%;
+    --accent: 22 77% 52%; /* #E67E22 */
     --accent-foreground: 0 0% 100%;
 
-    /* Craft Brown */
-    --craft-brown: 25 35% 35%;
-    --craft-brown-foreground: 0 0% 100%;
+    /* Design System Colors */
+    --color-teal: 180 21% 45%; /* #5A8A8A */
+    --color-teal-light: 180 23% 56%; /* #7BA5A5 */
+    --color-teal-dark: 180 22% 37%; /* #4A7373 */
+    --color-craft-orange: 22 77% 52%; /* #E67E22 */
+    --color-craft-brown: 22 68% 31%; /* #8B4513 */
+    --color-craft-cream: 44 18% 95%; /* #F5F4F0 */
+    --color-craft-paper: 44 10% 97%; /* #F8F6F0 */
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -130,62 +135,54 @@
 }
 
 @layer components {
-  /* Craft-Inspired Components */
-  .craft-teal {
-    background: var(--gradient-craft-teal);
+  /* Craft Design System Components */
+  .craft-card {
+    @apply bg-white border border-gray-200 rounded-3xl shadow-xl p-8;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
   }
   
-  .craft-orange {
-    background: var(--gradient-craft-orange);
+  /* Typography Styles */
+  .text-craft-brown {
+    color: hsl(var(--color-craft-brown));
   }
   
-  .craft-warm {
-    background: var(--gradient-craft-warm);
+  .text-craft-teal {
+    color: hsl(var(--color-teal));
   }
   
-  .paper-bg {
-    background: var(--gradient-paper);
+  .text-craft-orange {
+    color: hsl(var(--color-craft-orange));
   }
   
-  .shadow-craft {
-    box-shadow: var(--shadow-craft);
+  /* Background Colors */
+  .bg-craft-cream {
+    background-color: hsl(var(--color-craft-cream));
   }
   
-  .shadow-warm {
-    box-shadow: var(--shadow-warm);
+  .bg-craft-paper {
+    background-color: hsl(var(--color-craft-paper));
   }
   
-  .shadow-paper {
-    box-shadow: var(--shadow-paper);
+  .bg-craft-teal {
+    background-color: hsl(var(--color-teal));
   }
   
-  /* Typography */
+  .bg-craft-teal-light {
+    background-color: hsl(var(--color-teal-light));
+  }
+  
+  .bg-craft-teal-dark {
+    background-color: hsl(var(--color-teal-dark));
+  }
+  
+  /* Border Colors */
+  .border-craft-teal {
+    border-color: hsl(var(--color-teal));
+  }
+  
+  /* Handwritten Font */
   .font-handwritten {
     font-family: 'Caveat', cursive;
-  }
-  
-  .font-inter {
-    font-family: 'Inter', sans-serif;
-  }
-  
-  .text-craft-gradient {
-    background: var(--gradient-craft-warm);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-size: 200% 200%;
-    animation: gradient-shift 4s ease infinite;
-  }
-  
-  /* Organic Shapes */
-  .blob-shape {
-    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-    transition: all 0.3s ease;
-  }
-  
-  .blob-shape:hover {
-    border-radius: 70% 30% 40% 60% / 50% 60% 30% 70%;
-    transform: scale(1.05);
   }
   
   /* Interactive Elements */
@@ -197,38 +194,9 @@
     transform: translateY(-4px) rotate(1deg);
   }
   
-  .float-animation {
-    animation: craft-float 6s ease-in-out infinite;
-  }
-  
-  .rotate-slight {
-    transform: rotate(-2deg);
-  }
-  
-  .rotate-slight-right {
-    transform: rotate(2deg);
-  }
-  
-  /* Paper Card */
-  .paper-card {
-    background: hsl(var(--card));
-    border: 1px solid hsl(var(--border));
-    border-radius: 1.5rem;
-    box-shadow: var(--shadow-paper);
-    position: relative;
-  }
-  
-  .paper-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: var(--paper-texture);
-    border-radius: inherit;
-    opacity: 0.7;
-    pointer-events: none;
+  /* Decorative Elements */
+  .decorative-dot {
+    @apply w-2 h-2 bg-craft-orange rounded-full;
   }
   
   /* Hand-drawn underline */
@@ -243,7 +211,7 @@
     left: -5px;
     right: -5px;
     height: 8px;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 12'%3E%3Cpath d='M5,6 Q50,2 100,6 T200,6 Q250,4 295,6' stroke='%23F97316' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") center/cover no-repeat;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 12'%3E%3Cpath d='M5,6 Q50,2 100,6 T200,6 Q250,4 295,6' stroke='%23E67E22' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") center/cover no-repeat;
     opacity: 0.8;
   }
 }

@@ -61,7 +61,17 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Craft Design System Colors
+				'craft-teal': {
+					DEFAULT: 'hsl(var(--color-teal))',
+					light: 'hsl(var(--color-teal-light))',
+					dark: 'hsl(var(--color-teal-dark))',
+				},
+				'craft-orange': 'hsl(var(--color-craft-orange))',
+				'craft-brown': 'hsl(var(--color-craft-brown))',
+				'craft-cream': 'hsl(var(--color-craft-cream))',
+				'craft-paper': 'hsl(var(--color-craft-paper))',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
