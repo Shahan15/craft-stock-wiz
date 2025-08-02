@@ -148,76 +148,36 @@ function Hero() {
           </div>
 
           <div className="lg:col-span-5 relative">
-            <div className="relative">
-              {/* Paper texture background with torn edges */}
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-50 to-orange-50 transform rotate-2 rounded-none shadow-2xl" 
-                   style={{
-                     clipPath: 'polygon(2% 0%, 98% 1%, 99% 97%, 1% 98%)',
-                     filter: 'drop-shadow(3px 3px 0px rgba(139, 69, 19, 0.1))'
-                   }}>
+            <div className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+              <div className="handwritten text-2xl text-amber-800 mb-6 flex items-center justify-between">
+                Recipe Builder
+                <Sparkles className="w-6 h-6 text-orange-400" />
               </div>
               
-              {/* Main card with handmade feel */}
-              <div className="relative bg-gradient-to-br from-stone-50 via-orange-25 to-amber-25 p-8 transform rotate-1 shadow-xl border-2 border-amber-200/50"
-                   style={{
-                     clipPath: 'polygon(1% 2%, 99% 0%, 98% 99%, 0% 97%)',
-                     background: 'linear-gradient(145deg, #fefdf9 0%, #fef7ed 50%, #fffbeb 100%)',
-                     filter: 'drop-shadow(2px 8px 16px rgba(0, 0, 0, 0.15))'
-                   }}>
-                
-                {/* Handwritten title with ink texture */}
-                <div className="relative mb-6">
-                  <div className="handwritten text-3xl text-amber-900 mb-2 transform -rotate-1">Recipe Builder</div>
-                  <div className="absolute -bottom-1 left-0 w-32 h-1 bg-gradient-to-r from-amber-600 via-orange-400 to-transparent opacity-60 transform rotate-1"></div>
-                  <Sparkles className="absolute -top-2 -right-3 w-6 h-6 text-orange-400 transform rotate-12" />
+              <div className="space-y-4">
+                <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border-l-4 border-teal-400">
+                  <div className="w-3 h-3 bg-teal-500 rounded-full"></div>
+                  <span className="text-gray-700">1 × Silver Chain</span>
                 </div>
                 
-                {/* Recipe items with organic feel */}
-                <div className="space-y-5">
-                  <div className="flex items-center space-x-4 p-4 bg-gradient-to-r from-stone-100 to-amber-50 transform -rotate-1 border-l-4 border-teal-400 shadow-md"
-                       style={{ clipPath: 'polygon(0% 5%, 98% 0%, 100% 95%, 2% 100%)' }}>
-                    <div className="w-3 h-3 bg-teal-500 rounded-full shadow-inner"></div>
-                    <span className="text-base font-medium text-stone-700">1 × Silver Chain</span>
-                    <div className="w-2 h-2 bg-teal-300 rounded-full opacity-60"></div>
-                  </div>
-                  
-                  <div className="text-center">
-                    <span className="handwritten text-3xl text-orange-600 transform rotate-3 inline-block">+</span>
-                  </div>
-                  
-                  <div className="flex items-center space-x-4 p-4 bg-gradient-to-r from-orange-50 to-red-50 transform rotate-1 border-l-4 border-orange-400 shadow-md"
-                       style={{ clipPath: 'polygon(2% 0%, 100% 5%, 98% 100%, 0% 95%)' }}>
-                    <div className="w-3 h-3 bg-orange-500 rounded-full shadow-inner"></div>
-                    <span className="text-base font-medium text-stone-700">5 × Glass Beads</span>
-                    <div className="flex space-x-1">
-                      <div className="w-1.5 h-1.5 bg-orange-300 rounded-full"></div>
-                      <div className="w-1.5 h-1.5 bg-red-300 rounded-full"></div>
-                    </div>
-                  </div>
-                  
-                  <div className="text-center">
-                    <span className="handwritten text-3xl text-stone-500 transform -rotate-2 inline-block">=</span>
-                  </div>
-                  
-                  <div className="relative flex items-center space-x-4 p-5 bg-gradient-to-br from-emerald-50 to-teal-50 transform -rotate-1 border-2 border-teal-300 shadow-lg"
-                       style={{ 
-                         clipPath: 'polygon(1% 3%, 97% 0%, 99% 97%, 3% 100%)',
-                         background: 'linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 50%, #a7f3d0 100%)'
-                       }}>
-                    <Sparkles className="w-5 h-5 text-teal-600 animate-pulse" />
-                    <span className="text-lg font-bold text-teal-800">1 × Beaded Necklace</span>
-                    <div className="absolute top-1 right-2 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+                <div className="text-center text-2xl text-orange-500 font-light">+</div>
+                
+                <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg border-l-4 border-orange-400">
+                  <div className="w-3 h-3 bg-orange-500 rounded-full"></div>
+                  <span className="text-gray-700">5 × Glass Beads</span>
+                  <div className="flex space-x-1 ml-auto">
+                    <div className="w-1.5 h-1.5 bg-orange-300 rounded-full"></div>
+                    <div className="w-1.5 h-1.5 bg-red-300 rounded-full"></div>
                   </div>
                 </div>
                 
-                {/* Decorative elements */}
-                <div className="absolute -top-3 -left-2 w-4 h-4 bg-amber-400 rounded-full opacity-70 transform rotate-45"></div>
-                <div className="absolute bottom-2 right-3 w-3 h-3 bg-orange-300 transform rotate-12 opacity-50"></div>
+                <div className="text-center text-2xl text-gray-400 font-light">=</div>
+                
+                <div className="flex items-center space-x-3 p-4 bg-teal-50 rounded-lg border border-teal-200">
+                  <Sparkles className="w-5 h-5 text-teal-600" />
+                  <span className="text-lg font-semibold text-teal-800">1 × Beaded Necklace</span>
+                </div>
               </div>
-              
-              {/* Enhanced shadow elements */}
-              <div className="absolute -bottom-6 -right-6 w-20 h-20 bg-gradient-radial from-orange-300/30 to-transparent rounded-full blur-xl"></div>
-              <div className="absolute -top-2 -left-4 w-12 h-12 bg-gradient-radial from-amber-200/40 to-transparent rounded-full blur-lg"></div>
             </div>
             <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-craft-orange/20 rounded-full blur-xl"></div>
           </div>
@@ -279,9 +239,9 @@ function Features() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {features.map((feature, index) => (
-            <div key={index} className="craft-card p-8 hover:shadow-xl transition-all duration-300 group thread-connection">
-              <div className={`w-16 h-16 rounded-2xl bg-${feature.accent === 'teal' ? 'teal' : 'craft-orange'}/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-200`}>
-                <feature.icon className={`w-8 h-8 text-${feature.accent === 'teal' ? 'teal' : 'craft-orange'}`} />
+            <div key={index} className="bg-white p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 group">
+              <div className={`w-16 h-16 rounded-2xl ${feature.accent === 'teal' ? 'bg-teal-50' : 'bg-orange-50'} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-200`}>
+                <feature.icon className={`w-8 h-8 ${feature.accent === 'teal' ? 'text-teal' : 'text-craft-orange'}`} />
               </div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-teal transition-colors">
                 {feature.name}
@@ -331,13 +291,13 @@ function HowItWorks() {
         <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">How It Works</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, index) => (
-            <div key={index} className="relative p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 text-center">
-              <Badge className="bg-teal text-white font-bold text-xl absolute -top-4 left-1/2 transform -translate-x-1/2">
+            <div key={index} className="relative p-8 bg-white rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 text-center">
+              <div className="w-12 h-12 bg-teal text-white font-bold text-xl rounded-full flex items-center justify-center mx-auto mb-6">
                 {step.number}
-              </Badge>
-              <step.icon className="w-8 h-8 text-teal mx-auto mt-6 mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">{step.title}</h3>
-              <p className="text-gray-600">{step.description}</p>
+              </div>
+              <step.icon className="w-8 h-8 text-teal mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">{step.title}</h3>
+              <p className="text-gray-600 leading-relaxed">{step.description}</p>
             </div>
           ))}
         </div>
