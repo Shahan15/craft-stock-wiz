@@ -2,7 +2,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
-import { Package, Bell, Zap, FileText, Star, ArrowRight, Plus, ShoppingCart, TrendingDown, Sparkles, ChevronRight, Play } from 'lucide-react';
+import { Package, Bell, Plus, ShoppingCart, Star, ArrowRight, Play, ChevronRight, Sparkles, Zap, FileText, Brain, TrendingDown } from 'lucide-react';
 
 const Index = () => {
   const { user, signOut } = useAuth();
@@ -36,127 +36,164 @@ const Index = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden">
+    <div className="min-h-screen bg-background overflow-hidden font-inter">
       {/* Navigation */}
-      <nav className="relative z-50 border-b bg-white/80 backdrop-blur-md">
+      <nav className="relative z-50 bg-background/80 backdrop-blur-md border-b border-border">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <div className="p-2 gradient-primary rounded-lg">
+          <div className="flex items-center space-x-3">
+            <div className="p-2 craft-teal rounded-2xl shadow-craft rotate-slight">
               <Package className="h-6 w-6 text-white" />
             </div>
-            <span className="text-2xl font-bold text-gradient">Stock Kit</span>
+            <span className="text-2xl font-bold font-handwritten text-craft-gradient">Stock Kit</span>
+            <span className="text-sm text-muted-foreground font-handwritten italic">for makers</span>
           </div>
-          <Link to="/auth">
-            <Button variant="premium" size="lg">Get Started</Button>
-          </Link>
+          <div className="hidden md:flex items-center space-x-8">
+            <a href="#features" className="text-sm font-medium hover:text-primary transition-colors">Features</a>
+            <a href="#how-it-works" className="text-sm font-medium hover:text-primary transition-colors">How It Works</a>
+            <a href="#pricing" className="text-sm font-medium hover:text-primary transition-colors">Pricing</a>
+            <Link to="/auth">
+              <Button variant="craft-outline" size="sm">Sign In</Button>
+            </Link>
+          </div>
         </div>
       </nav>
 
-      {/* Hero Section with Mesh Background */}
-      <section className="relative py-32 overflow-hidden">
-        <div className="absolute inset-0 gradient-mesh opacity-60"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-white"></div>
+      {/* Hero Section */}
+      <section className="relative py-20 md:py-32 overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute top-20 left-10 w-32 h-32 craft-teal blob-shape opacity-20 float-animation"></div>
+        <div className="absolute bottom-20 right-20 w-24 h-24 craft-orange blob-shape opacity-30 float-animation" style={{animationDelay: '2s'}}></div>
+        <div className="absolute top-1/2 left-1/3 w-16 h-16 bg-craft-brown blob-shape opacity-15 float-animation" style={{animationDelay: '4s'}}></div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mb-8">
-              <Sparkles className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium">Revolutionary Recipe-Based Inventory</span>
-            </div>
-            
-            <h1 className="text-6xl md:text-7xl font-black mb-6 leading-tight">
-              Automatically Deduct 
-              <span className="text-gradient animate-gradient"> Materials </span>
-              with Every Sale
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
-              Build simple product recipes—think <span className="font-semibold text-accent">'1 chain + 5 beads = 1 necklace'</span>—then watch stock levels adjust themselves. No more spreadsheets, no more guesswork.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link to="/auth">
-                <Button variant="glow" size="xl" className="group">
-                  Start Free Trial
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                </Button>
-              </Link>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="space-y-8">
+              <div className="inline-flex items-center gap-3 px-5 py-3 paper-card rotate-slight">
+                <Sparkles className="h-5 w-5 text-craft-orange" />
+                <span className="text-sm font-medium text-craft-gradient">Revolutionary Recipe-Based Inventory</span>
+              </div>
               
-              <Button variant="outline" size="xl" className="group bg-white/80 backdrop-blur-sm hover:bg-white/90">
-                <Play className="mr-2 h-5 w-5" />
-                Watch 2-min Demo
-                <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Button>
+              <div className="space-y-6">
+                <h1 className="text-5xl md:text-6xl font-black leading-tight">
+                  <span className="block">Automatically</span>
+                  <span className="block text-craft-gradient hand-underline">Deduct Materials</span>
+                  <span className="block">with Every Sale</span>
+                </h1>
+                
+                <div className="space-y-4 text-lg md:text-xl text-muted-foreground leading-relaxed">
+                  <p className="flex items-center gap-3">
+                    <span className="w-2 h-2 bg-craft-teal rounded-full"></span>
+                    Build simple product recipes like <span className="font-semibold text-craft-teal">"1 chain + 5 beads = 1 necklace"</span>
+                  </p>
+                  <p className="flex items-center gap-3">
+                    <span className="w-2 h-2 bg-craft-orange rounded-full"></span>
+                    then watch stock levels update themselves—no more guesswork.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-4 items-start">
+                <Link to="/auth">
+                  <Button variant="craft-warm" size="xl" className="group shadow-warm">
+                    <Sparkles className="mr-2 h-5 w-5" />
+                    Start Free Trial
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </Link>
+                
+                <Button variant="craft-outline" size="xl" className="group">
+                  <Play className="mr-2 h-5 w-5" />
+                  Watch 2-min Demo
+                  <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </div>
+              
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <span className="font-medium text-craft-orange">200+ makers</span> 
+                <span>already saving hours weekly</span>
+              </div>
             </div>
-            
-            <div className="mt-16 text-sm text-muted-foreground">
-              <span className="font-medium text-accent">200+ makers</span> already saving hours weekly
+
+            {/* Right Content - Recipe Builder Visual */}
+            <div className="relative">
+              <div className="paper-card p-8 rotate-slight-right craft-hover max-w-md mx-auto">
+                <h3 className="text-xl font-handwritten text-craft-orange mb-6">Recipe Builder</h3>
+                
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 p-3 bg-craft-teal/10 rounded-xl">
+                    <div className="w-3 h-3 bg-craft-teal rounded-full"></div>
+                    <span className="font-medium">1x Silver Chain</span>
+                  </div>
+                  
+                  <div className="text-center text-2xl font-handwritten text-muted-foreground">+</div>
+                  
+                  <div className="flex items-center gap-3 p-3 bg-craft-orange/10 rounded-xl">
+                    <div className="w-3 h-3 bg-craft-orange rounded-full"></div>
+                    <span className="font-medium">5x Glass Beads</span>
+                  </div>
+                  
+                  <div className="text-center text-2xl font-handwritten text-muted-foreground">=</div>
+                  
+                  <div className="p-4 bg-gradient-to-r from-craft-teal/5 to-craft-orange/5 rounded-xl border-2 border-dashed border-craft-teal/30">
+                    <div className="flex items-center gap-3">
+                      <Sparkles className="h-5 w-5 text-craft-teal" />
+                      <span className="font-semibold">1x Beaded Necklace</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        {/* Floating elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 gradient-primary rounded-full opacity-20 floating-animation"></div>
-        <div className="absolute bottom-20 right-10 w-16 h-16 gradient-accent rounded-full opacity-30 floating-animation" style={{animationDelay: '2s'}}></div>
       </section>
 
-      {/* Features Section - Interactive Cards */}
-      <section className="py-24 bg-gradient-to-b from-white to-muted/30">
+      {/* Features Section */}
+      <section id="features" className="py-24 bg-gradient-to-b from-background to-secondary/30">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient">
-              Features That Actually Matter
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl md:text-4xl font-bold">
+              <span className="font-handwritten text-4xl md:text-5xl text-craft-gradient">Why makers love us</span>
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Stop wasting time on manual calculations. Let automation handle your inventory.
-            </p>
+            <div className="w-24 h-1 bg-craft-orange rounded-full mx-auto"></div>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <Card className="hover-lift group border-2 border-accent/20 bg-gradient-to-br from-accent/5 to-accent/10">
-              <CardHeader className="text-center">
-                <div className="mx-auto p-4 gradient-accent rounded-2xl mb-4 shadow-accent">
-                  <Plus className="h-8 w-8 text-white" />
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            {/* Recipe Builder */}
+            <Card className="paper-card craft-hover border-2 border-craft-teal/20 bg-gradient-to-br from-craft-teal/5 to-craft-teal/10">
+              <CardHeader className="text-center space-y-4">
+                <div className="mx-auto p-4 bg-craft-teal/20 blob-shape">
+                  <Brain className="h-8 w-8 text-craft-teal" />
                 </div>
-                <CardTitle className="text-xl text-accent">Recipe Builder</CardTitle>
-                <CardDescription className="text-base">
-                  Create simple product recipes by selecting materials and quantities—like "1 chain + 5 beads = 1 necklace."
+                <CardTitle className="text-xl text-craft-teal font-semibold">Recipe Builder</CardTitle>
+                <CardDescription className="text-base leading-relaxed">
+                  Create simple formulas for your products. Define exactly what materials go into each item you make.
                 </CardDescription>
               </CardHeader>
             </Card>
             
-            <Card className="hover-lift group border-0 shadow-lg">
-              <CardHeader className="text-center">
-                <div className="mx-auto p-4 gradient-primary rounded-2xl mb-4 shadow-glow">
-                  <Zap className="h-8 w-8 text-white" />
+            {/* Auto-Deduct Stock */}
+            <Card className="paper-card craft-hover">
+              <CardHeader className="text-center space-y-4">
+                <div className="mx-auto p-4 bg-craft-orange/20 blob-shape">
+                  <Zap className="h-8 w-8 text-craft-orange" />
                 </div>
-                <CardTitle className="text-xl">Auto-Deduct Stock</CardTitle>
-                <CardDescription className="text-base">
-                  Watch materials automatically reduce when you log a sale—no manual calculations needed.
+                <CardTitle className="text-xl text-craft-orange font-semibold">Auto-Deduct Stock</CardTitle>
+                <CardDescription className="text-base leading-relaxed">
+                  Every time you log a sale, Stock-Kit automatically deducts the right materials from your inventory.
                 </CardDescription>
               </CardHeader>
             </Card>
             
-            <Card className="hover-lift group border-0 shadow-lg">
-              <CardHeader className="text-center">
-                <div className="mx-auto p-4 bg-orange-500 rounded-2xl mb-4">
-                  <Bell className="h-8 w-8 text-white" />
+            {/* Low-Stock Alerts */}
+            <Card className="paper-card craft-hover">
+              <CardHeader className="text-center space-y-4">
+                <div className="mx-auto p-4 bg-craft-brown/20 blob-shape">
+                  <Bell className="h-8 w-8 text-craft-brown" />
                 </div>
-                <CardTitle className="text-xl">Smart Alerts</CardTitle>
-                <CardDescription className="text-base">
-                  Get notified when materials hit your custom thresholds so you never run out mid-production.
-                </CardDescription>
-              </CardHeader>
-            </Card>
-            
-            <Card className="hover-lift group border-0 shadow-lg">
-              <CardHeader className="text-center">
-                <div className="mx-auto p-4 bg-indigo-500 rounded-2xl mb-4">
-                  <FileText className="h-8 w-8 text-white" />
-                </div>
-                <CardTitle className="text-xl">Quick Templates</CardTitle>
-                <CardDescription className="text-base">
-                  Start with pre-built recipes for candle-makers, jewellers, soap-makers, and more crafts.
+                <CardTitle className="text-xl text-craft-brown font-semibold">Low-Stock Alerts</CardTitle>
+                <CardDescription className="text-base leading-relaxed">
+                  Get notified before you run out of materials so you can restock at the perfect time.
                 </CardDescription>
               </CardHeader>
             </Card>
