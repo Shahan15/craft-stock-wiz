@@ -356,7 +356,7 @@ export default function Products() {
                         setSelectedProduct(product)
                         setShowForm(true)
                       }}
-                      className="flex-1 border-gray-300"
+                      className="flex-1"
                     >
                       <Edit className="w-4 h-4 mr-1" />
                       Edit

@@ -141,11 +141,11 @@ export default function Materials() {
           </div>
           
           <div className="flex space-x-3">
-            <Button variant="outline" className="border-gray-300">
+            <Button variant="outline">
               <Upload className="w-4 h-4 mr-2" />
               Import
             </Button>
-            <Button variant="outline" className="border-gray-300">
+            <Button variant="outline">
               <Download className="w-4 h-4 mr-2" />
               Export
             </Button>
@@ -326,7 +326,7 @@ export default function Materials() {
                               setSelectedMaterial(material)
                               setShowForm(true)
                             }}
-                            className="border-gray-300"
+                            className=""
                           >
                             <Edit className="w-4 h-4" />
                           </Button>
