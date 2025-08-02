@@ -7,39 +7,39 @@
 
 @layer base {
   :root {
-    /* Exact Color Palette from Design */
-    --background: 44 10% 97%; /* #F8F6F0 - craft-paper */
-    --foreground: 213 25% 17%; /* #1F2D3D - main text */
+    /* Exact Color Palette - Pixel Perfect */
+    --background: 44 18% 96%; /* #F8F6F0 - Paper Background */
+    --foreground: 213 24% 18%; /* #1F2D3D - Body Text */
 
     --card: 0 0% 100%; /* #FFFFFF */
-    --card-foreground: 213 25% 17%;
+    --card-foreground: 213 24% 18%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 213 25% 17%;
+    --popover-foreground: 213 24% 18%;
 
-    /* Craft Teal - Primary */
+    /* Primary Teal - Exact #5A8A8A */
     --primary: 180 21% 45%; /* #5A8A8A */
     --primary-foreground: 0 0% 100%;
 
-    /* Craft Cream - Secondary */
+    /* Cream Card Background - Exact #F5F4F0 */
     --secondary: 44 18% 95%; /* #F5F4F0 */
-    --secondary-foreground: 213 25% 17%;
+    --secondary-foreground: 213 24% 18%;
 
     --muted: 44 18% 95%;
     --muted-foreground: 213 15% 45%;
 
-    /* Craft Orange - Accent */
+    /* Accent Orange - Exact #E67E22 */
     --accent: 22 77% 52%; /* #E67E22 */
     --accent-foreground: 0 0% 100%;
 
-    /* Design System Colors */
-    --color-teal: 180 21% 45%; /* #5A8A8A */
+    /* Pixel Perfect Design Colors */
+    --color-primary-teal: 180 21% 45%; /* #5A8A8A */
     --color-teal-light: 180 23% 56%; /* #7BA5A5 */
     --color-teal-dark: 180 22% 37%; /* #4A7373 */
-    --color-craft-orange: 22 77% 52%; /* #E67E22 */
-    --color-craft-brown: 22 68% 31%; /* #8B4513 */
-    --color-craft-cream: 44 18% 95%; /* #F5F4F0 */
-    --color-craft-paper: 44 10% 97%; /* #F8F6F0 */
+    --color-accent-orange: 22 77% 52%; /* #E67E22 */
+    --color-accent-brown: 22 68% 31%; /* #8B4513 */
+    --color-cream-bg: 44 18% 95%; /* #F5F4F0 */
+    --color-paper-bg: 44 18% 96%; /* #F8F6F0 */
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
@@ -136,54 +136,102 @@
 }
 
 @layer components {
-  /* Craft Design System Components */
-  .craft-card {
-    @apply bg-white border border-gray-200 rounded-3xl shadow-xl p-8;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+  /* Pixel Perfect Typography System */
+  .text-h1 {
+    font-size: 3rem; /* 48px */
+    font-weight: 700;
+    line-height: 1.25;
   }
   
-  /* Typography Styles */
-  .text-craft-brown {
-    color: hsl(var(--color-craft-brown));
+  @media (min-width: 1024px) {
+    .text-h1 {
+      font-size: 5rem; /* 80px */
+    }
   }
   
-  .text-craft-teal {
-    color: hsl(var(--color-teal));
+  .text-h2 {
+    font-size: 2.25rem; /* 36px */
+    font-weight: 700;
+    line-height: 1.25;
   }
   
-  .text-craft-orange {
-    color: hsl(var(--color-craft-orange));
+  @media (min-width: 1024px) {
+    .text-h2 {
+      font-size: 3rem; /* 48px */
+    }
   }
   
-  /* Background Colors */
-  .bg-craft-cream {
-    background-color: hsl(var(--color-craft-cream));
+  .text-h3 {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 700;
+    line-height: 1.5;
   }
   
-  .bg-craft-paper {
-    background-color: hsl(var(--color-craft-paper));
+  .text-body {
+    font-size: 1.125rem; /* 18px */
+    font-weight: 400;
+    line-height: 1.6;
   }
   
-  .bg-craft-teal {
-    background-color: hsl(var(--color-teal));
+  .text-button {
+    font-size: 1.125rem; /* 18px */
+    font-weight: 600;
   }
   
-  .bg-craft-teal-light {
-    background-color: hsl(var(--color-teal-light));
+  .text-badge {
+    font-size: 0.875rem; /* 14px */
+    font-weight: 500;
   }
   
-  .bg-craft-teal-dark {
-    background-color: hsl(var(--color-teal-dark));
-  }
-  
-  /* Border Colors */
-  .border-craft-teal {
-    border-color: hsl(var(--color-teal));
-  }
-  
-  /* Handwritten Font */
-  .font-handwritten {
+  .text-script {
     font-family: 'Caveat', cursive;
+    font-size: 1.5rem; /* 24px */
+    font-weight: 400;
+    color: hsl(var(--color-accent-brown));
+  }
+
+  /* Pixel Perfect Card System */
+  .feature-card {
+    background-color: hsl(var(--color-cream-bg));
+    border: 1px solid hsla(180, 21%, 45%, 0.1);
+    border-radius: 0.625rem; /* 10px */
+    padding: 2rem; /* 32px */
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  }
+  
+  .hero-mockup {
+    background: linear-gradient(135deg, #FFFFFF 0%, #FDFCF8 100%);
+    border-radius: 0.625rem; /* 10px */
+    transform: rotate(-5deg);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Layout System */
+  .section-padding {
+    padding-top: 5rem; /* 80px */
+    padding-bottom: 5rem; /* 80px */
+  }
+  
+  .container-padding {
+    padding-left: 1.5rem; /* 24px mobile */
+    padding-right: 1.5rem; /* 24px mobile */
+  }
+  
+  @media (min-width: 1024px) {
+    .container-padding {
+      padding-left: 3rem; /* 48px desktop */
+      padding-right: 3rem; /* 48px desktop */
+    }
+  }
+  
+  .grid-gap {
+    gap: 2rem; /* 32px mobile */
+  }
+  
+  @media (min-width: 1024px) {
+    .grid-gap {
+      gap: 3rem; /* 48px desktop */
+    }
   }
   
   /* Interactive Elements */

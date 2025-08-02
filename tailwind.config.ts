@@ -62,16 +62,14 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Craft Design System Colors
-				'craft-teal': {
-					DEFAULT: 'hsl(var(--color-teal))',
-					light: 'hsl(var(--color-teal-light))',
-					dark: 'hsl(var(--color-teal-dark))',
-				},
-				'craft-orange': 'hsl(var(--color-craft-orange))',
-				'craft-brown': 'hsl(var(--color-craft-brown))',
-				'craft-cream': 'hsl(var(--color-craft-cream))',
-				'craft-paper': 'hsl(var(--color-craft-paper))',
+			// Pixel Perfect Color System
+			'primary-teal': 'hsl(var(--color-primary-teal))',
+			'teal-light': 'hsl(var(--color-teal-light))',
+			'teal-dark': 'hsl(var(--color-teal-dark))',
+			'accent-orange': 'hsl(var(--color-accent-orange))',
+			'accent-brown': 'hsl(var(--color-accent-brown))',
+			'cream-bg': 'hsl(var(--color-cream-bg))',
+			'paper-bg': 'hsl(var(--color-paper-bg))',
 			},
 			fontFamily: {
 				inter: ['Inter', 'sans-serif'],
