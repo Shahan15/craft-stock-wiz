@@ -4,6 +4,7 @@ import { ProtectedRoute } from './components/ProtectedRoute'
 import AuthPage from './pages/Auth'
 import Dashboard from './pages/Dashboard'
 import Materials from './pages/Materials'
+import Products from './pages/Products'
 import LandingPage from './pages/Landing'
 
 function App() {
@@ -33,6 +34,11 @@ function App() {
         <Route path="/materials" element={
           <ProtectedRoute>
             <Materials />
+          </ProtectedRoute>
+        } />
+        <Route path="/products" element={
+          <ProtectedRoute>
+            <Products />
           </ProtectedRoute>
         } />
       </Routes>
