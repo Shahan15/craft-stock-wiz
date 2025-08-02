@@ -29,13 +29,13 @@
     --radius: 0.5rem;
 
     /* Custom Stock-Kit colors */
-    --teal: #5a8a8a;
-    --teal-light: #7ba5a5;
-    --teal-dark: #4a7373;
-    --craft-orange: #e67e22;
-    --craft-brown: #8b4513;
-    --craft-cream: #f5f4f0;
-    --craft-paper: #f8f6f0;
+    --teal: 180 25% 50%;
+    --teal-light: 180 30% 55%;
+    --teal-dark: 180 25% 40%;
+    --craft-orange: 25 85% 60%;
+    --craft-brown: 25 85% 35%;
+    --craft-cream: 35 15% 94%;
+    --craft-paper: 35 20% 96%;
 
     /* Craft-Inspired Gradients */
     --gradient-craft-teal: linear-gradient(135deg, hsl(180 25% 50%), hsl(175 30% 45%));
