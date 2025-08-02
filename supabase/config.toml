@@ -1,0 +1,10 @@
+project_id = "gmbcepywutbrhppxbwkk"
+
+[functions.shopify-auth]
+verify_jwt = false
+
+[functions.shopify-sync]
+verify_jwt = true
+
+[functions.etsy-auth]
+verify_jwt = false

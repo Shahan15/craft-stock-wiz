@@ -14,6 +14,96 @@ export type Database = {
   }
   public: {
     Tables: {
+      external_products: {
+        Row: {
+          created_at: string
+          external_product_id: string
+          external_variant_id: string | null
+          id: string
+          integration_id: string
+          last_synced_at: string | null
+          local_product_id: string | null
+          platform_data: Json | null
+        }
+        Insert: {
+          created_at?: string
+          external_product_id: string
+          external_variant_id?: string | null
+          id?: string
+          integration_id: string
+          last_synced_at?: string | null
+          local_product_id?: string | null
+          platform_data?: Json | null
+        }
+        Update: {
+          created_at?: string
+          external_product_id?: string
+          external_variant_id?: string | null
+          id?: string
+          integration_id?: string
+          last_synced_at?: string | null
+          local_product_id?: string | null
+          platform_data?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "external_products_integration_id_fkey"
+            columns: ["integration_id"]
+            isOneToOne: false
+            referencedRelation: "integrations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "external_products_local_product_id_fkey"
+            columns: ["local_product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      integrations: {
+        Row: {
+          access_token: string
+          created_at: string
+          id: string
+          is_active: boolean
+          last_sync_at: string | null
+          platform: string
+          refresh_token: string | null
+          shop_name: string
+          shop_url: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          access_token: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_sync_at?: string | null
+          platform: string
+          refresh_token?: string | null
+          shop_name: string
+          shop_url?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          access_token?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          last_sync_at?: string | null
+          platform?: string
+          refresh_token?: string | null
+          shop_name?: string
+          shop_url?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       materials: {
         Row: {
           cost_per_unit: number
@@ -183,6 +273,47 @@ export type Database = {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sync_logs: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          id: string
+          integration_id: string
+          items_processed: number | null
+          status: string
+          sync_data: Json | null
+          sync_type: string
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          integration_id: string
+          items_processed?: number | null
+          status?: string
+          sync_data?: Json | null
+          sync_type: string
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          integration_id?: string
+          items_processed?: number | null
+          status?: string
+          sync_data?: Json | null
+          sync_type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sync_logs_integration_id_fkey"
+            columns: ["integration_id"]
+            isOneToOne: false
+            referencedRelation: "integrations"
             referencedColumns: ["id"]
           },
         ]

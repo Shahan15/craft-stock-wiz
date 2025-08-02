@@ -10,7 +10,11 @@ import {
   ShoppingCart, 
   Settings, 
   LogOut,
-  Circle
+  Circle,
+  Link as LinkIcon,
+  TrendingUp,
+  FileText,
+  User
 } from 'lucide-react'
 
 interface LayoutProps {
@@ -25,8 +29,11 @@ export function Layout({ children }: LayoutProps) {
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'Materials', href: '/materials', icon: Package },
     { name: 'Products', href: '/products', icon: Palette },
+    { name: 'Recipes', href: '/recipes', icon: FileText },
     { name: 'Orders', href: '/orders', icon: ShoppingCart },
-    { name: 'Settings', href: '/settings', icon: Settings },
+    { name: 'Analytics', href: '/analytics', icon: TrendingUp },
+    { name: 'Integrations', href: '/integrations', icon: LinkIcon },
+    { name: 'Profile', href: '/profile', icon: User },
   ]
 
   const handleSignOut = async () => {

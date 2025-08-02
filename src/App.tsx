@@ -9,6 +9,7 @@ import Orders from './pages/Orders'
 import Recipes from './pages/Recipes'
 import Profile from './pages/Profile'
 import Analytics from './pages/Analytics'
+import Integrations from './pages/Integrations'
 import LandingPage from './pages/Landing'
 
 function App() {
@@ -63,6 +64,11 @@ function App() {
         <Route path="/profile" element={
           <ProtectedRoute>
             <Profile />
+          </ProtectedRoute>
+        } />
+        <Route path="/integrations" element={
+          <ProtectedRoute>
+            <Integrations />
           </ProtectedRoute>
         } />
       </Routes>
