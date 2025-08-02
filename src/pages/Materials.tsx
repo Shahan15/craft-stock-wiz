@@ -151,7 +151,7 @@ export default function Materials() {
             </Button>
             <Button 
               onClick={() => setShowForm(true)}
-              className="bg-teal hover:bg-teal-dark text-white"
+              className=""
             >
               <Plus className="w-4 h-4 mr-2" />
               Add Material
@@ -256,7 +256,7 @@ export default function Materials() {
               {!searchTerm && filterType === 'all' && (
                 <Button 
                   onClick={() => setShowForm(true)}
-                  className="bg-teal hover:bg-teal-dark text-white"
+                  className=""
                 >
                   <Plus className="w-4 h-4 mr-2" />
                   Add Your First Material

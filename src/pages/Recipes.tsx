@@ -198,7 +198,7 @@ export default function Recipes() {
           </div>
           <Button 
             onClick={() => setShowAddModal(true)}
-            className="bg-teal hover:bg-teal-dark"
+            className=""
           >
             <Plus className="w-4 h-4 mr-2" />
             Add Recipe
@@ -305,7 +305,7 @@ export default function Recipes() {
                   }
                 </p>
                 {!searchTerm && selectedProduct === 'all' && (
-                  <Button onClick={() => setShowAddModal(true)} className="bg-teal hover:bg-teal-dark">
+                  <Button onClick={() => setShowAddModal(true)} variant="default">
                     <Plus className="w-4 h-4 mr-2" />
                     Create First Recipe
                   </Button>
@@ -384,7 +384,7 @@ export default function Recipes() {
                 <Button 
                   onClick={handleAddRecipe}
                   disabled={!newRecipe.product_id || !newRecipe.material_id}
-                  className="flex-1 bg-teal hover:bg-teal-dark"
+                  className="flex-1"
                 >
                   Add Recipe Step
                 </Button>

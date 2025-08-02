@@ -130,13 +130,13 @@ export default function Dashboard() {
           
           <div className="flex space-x-4">
             <Link to="/materials">
-              <Button className="bg-teal hover:bg-teal-dark text-white">
+              <Button variant="default">
                 <Plus className="w-4 h-4 mr-2" />
                 Add Material
               </Button>
             </Link>
             <Link to="/products">
-              <Button className="bg-craft-orange hover:bg-craft-orange/90 text-white">
+              <Button variant="craft-warm">
                 <Plus className="w-4 h-4 mr-2" />
                 Add Product
               </Button>
@@ -243,7 +243,7 @@ export default function Dashboard() {
                 <p className="text-gray-600 font-medium">No recent sales</p>
                 <p className="text-gray-500 text-sm">Start by adding your first sale!</p>
                 <Link to="/orders" className="mt-4 inline-block">
-                  <Button size="sm" className="bg-teal hover:bg-teal-dark text-white">
+                  <Button size="sm" variant="default">
                     Add Sale
                   </Button>
                 </Link>

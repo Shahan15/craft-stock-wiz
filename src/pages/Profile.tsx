@@ -225,7 +225,7 @@ export default function Profile() {
             <Button 
               onClick={handleSave}
               disabled={saving}
-              className="w-full bg-teal hover:bg-teal-dark"
+              className="w-full"
             >
               {saving ? (
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />

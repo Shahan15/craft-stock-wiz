@@ -193,7 +193,7 @@ export function MaterialForm({ material, onSave, onCancel }: MaterialFormProps) 
         <Button
           type="submit"
           disabled={loading}
-          className="flex-1 bg-teal hover:bg-teal-dark text-white"
+          className="flex-1"
         >
           {loading ? (
             <div className="flex items-center space-x-2">

@@ -130,7 +130,7 @@ function Hero() {
             <div className="flex flex-col sm:flex-row gap-6 items-start">
               <Button 
                 size="lg" 
-                className="bg-teal hover:bg-teal-dark text-white px-8 py-4 text-lg font-semibold transform hover:scale-105 transition-all duration-200 shadow-lg"
+                className="px-8 py-4 text-lg font-semibold transition-all duration-200 shadow-lg"
               >
                 <Heart className="w-5 h-5 mr-2" />
                 Start Free Trial
@@ -331,7 +331,7 @@ function Pricing() {
           <p className="text-gray-600 text-lg mb-8">
             Start with our free plan and upgrade as your business grows.
           </p>
-          <Button className="bg-teal hover:bg-teal-dark text-white py-3 px-8 text-lg transform hover:scale-105 transition-all duration-200">
+          <Button className="py-3 px-8 text-lg transition-all duration-200">
             View Pricing Plans
           </Button>
         </div>

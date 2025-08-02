@@ -77,7 +77,7 @@ export function AddIntegrationDialog({ onIntegrationAdded }: AddIntegrationDialo
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="craft-card bg-primary text-primary-foreground hover:bg-primary/90">
+        <Button variant="default" className="craft-card">
           <Plus className="w-4 h-4 mr-2" />
           Add Integration
         </Button>

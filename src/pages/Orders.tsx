@@ -158,7 +158,7 @@ export default function Orders() {
           </div>
           <Button 
             onClick={() => setShowAddModal(true)}
-            className="bg-teal hover:bg-teal-dark"
+            className=""
           >
             <Plus className="w-4 h-4 mr-2" />
             Add Order
@@ -270,7 +270,7 @@ export default function Orders() {
                   }
                 </p>
                 {!searchTerm && statusFilter === 'all' && (
-                  <Button onClick={() => setShowAddModal(true)} className="bg-teal hover:bg-teal-dark">
+                  <Button onClick={() => setShowAddModal(true)} variant="default">
                     <Plus className="w-4 h-4 mr-2" />
                     Add First Order
                   </Button>
@@ -358,7 +358,7 @@ export default function Orders() {
                 <Button 
                   onClick={handleAddOrder}
                   disabled={!newOrder.product_id}
-                  className="flex-1 bg-teal hover:bg-teal-dark"
+                  className="flex-1"
                 >
                   Add Order
                 </Button>

@@ -162,7 +162,7 @@ export default function AuthPage() {
               <Button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-teal hover:bg-teal-dark text-white py-3 text-lg font-semibold"
+                className="w-full py-3 text-lg font-semibold"
               >
                 {loading ? (
                   <div className="flex items-center space-x-2">
