@@ -77,7 +77,7 @@ export function AddIntegrationDialog({ onIntegrationAdded }: AddIntegrationDialo
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="default" className="craft-card">
+        <Button variant="default">
           <Plus className="w-4 h-4 mr-2" />
           Add Integration
         </Button>
