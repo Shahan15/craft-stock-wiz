@@ -90,7 +90,7 @@ export function IntegrationCard({ integration, onSync, onDelete, onToggleActive 
   }
 
   return (
-    <Card className="craft-card transform hover:scale-105 transition-all duration-300">
+    <Card className="craft-card">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">

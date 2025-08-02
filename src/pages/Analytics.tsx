@@ -166,7 +166,7 @@ export default function Analytics() {
 
         {/* Key Metrics */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          <Card className="craft-card transform rotate-1 hover:scale-105 transition-all duration-200">
+          <Card className="craft-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
               <DollarSign className="h-4 w-4 text-teal" />
@@ -179,7 +179,7 @@ export default function Analytics() {
             </CardContent>
           </Card>
 
-          <Card className="craft-card transform -rotate-1 hover:scale-105 transition-all duration-200">
+          <Card className="craft-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
               <ShoppingCart className="h-4 w-4 text-craft-orange" />
@@ -192,7 +192,7 @@ export default function Analytics() {
             </CardContent>
           </Card>
 
-          <Card className="craft-card transform rotate-2 hover:scale-105 transition-all duration-200">
+          <Card className="craft-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Products</CardTitle>
               <Package className="h-4 w-4 text-teal" />
@@ -205,7 +205,7 @@ export default function Analytics() {
             </CardContent>
           </Card>
 
-          <Card className="craft-card transform -rotate-2 hover:scale-105 transition-all duration-200">
+          <Card className="craft-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Low Stock Items</CardTitle>
               <AlertTriangle className="h-4 w-4 text-red-500" />

@@ -167,7 +167,7 @@ export default function Orders() {
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="craft-card transform hover:scale-105 transition-all duration-200">
+          <Card className="craft-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
               <TrendingUp className="h-4 w-4 text-teal" />
@@ -177,7 +177,7 @@ export default function Orders() {
             </CardContent>
           </Card>
 
-          <Card className="craft-card transform hover:scale-105 transition-all duration-200">
+          <Card className="craft-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
               <ShoppingCart className="h-4 w-4 text-craft-orange" />
@@ -187,7 +187,7 @@ export default function Orders() {
             </CardContent>
           </Card>
 
-          <Card className="craft-card transform hover:scale-105 transition-all duration-200">
+          <Card className="craft-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">Completed</CardTitle>
               <Package className="h-4 w-4 text-teal" />
