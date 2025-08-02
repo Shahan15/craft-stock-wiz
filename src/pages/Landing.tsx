@@ -180,7 +180,7 @@ function HowItWorks() {
         <h2 className="text-3xl font-bold text-gray-900 text-center mb-12">How It Works</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, index) => (
-            <div key={index} className="p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 text-center">
+            <div key={index} className="relative p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 text-center">
               <Badge className="bg-teal text-white font-bold text-xl absolute -top-4 left-1/2 transform -translate-x-1/2">
                 {step.number}
               </Badge>
