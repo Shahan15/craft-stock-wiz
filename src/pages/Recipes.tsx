@@ -235,7 +235,7 @@ export default function Recipes() {
         {/* Recipes by Product */}
         <div className="space-y-8">
           {Object.entries(recipesByProduct).map(([productName, productRecipes]) => (
-            <Card key={productName} className="craft-card transform rotate-1 hover:rotate-0 transition-all duration-300">
+            <Card key={productName} className="craft-card">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-xl handwritten text-teal">
                   <Scissors className="w-5 h-5" />

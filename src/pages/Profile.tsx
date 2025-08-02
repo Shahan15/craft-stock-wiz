@@ -140,7 +140,7 @@ export default function Profile() {
         </div>
 
         {/* Profile Picture Section */}
-        <Card className="craft-card transform rotate-1 hover:rotate-0 transition-all duration-300">
+        <Card className="craft-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <User className="w-5 h-5 text-teal" />
@@ -170,7 +170,7 @@ export default function Profile() {
         </Card>
 
         {/* Business Information */}
-        <Card className="craft-card transform -rotate-1 hover:rotate-0 transition-all duration-300">
+        <Card className="craft-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Building2 className="w-5 h-5 text-craft-orange" />
@@ -238,7 +238,7 @@ export default function Profile() {
         </Card>
 
         {/* Account Settings */}
-        <Card className="craft-card transform rotate-2 hover:rotate-0 transition-all duration-300">
+        <Card className="craft-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Settings className="w-5 h-5 text-teal" />

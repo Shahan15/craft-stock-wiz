@@ -222,7 +222,7 @@ export default function Analytics() {
         {/* Charts and Details */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Top Products */}
-          <Card className="craft-card transform rotate-1 hover:rotate-0 transition-all duration-300">
+          <Card className="craft-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Target className="w-5 h-5 text-teal" />
@@ -258,7 +258,7 @@ export default function Analytics() {
           </Card>
 
           {/* Recent Orders */}
-          <Card className="craft-card transform -rotate-1 hover:rotate-0 transition-all duration-300">
+          <Card className="craft-card">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-craft-orange" />
@@ -299,7 +299,7 @@ export default function Analytics() {
         </div>
 
         {/* Growth Insights */}
-        <Card className="craft-card transform rotate-1 hover:rotate-0 transition-all duration-300">
+        <Card className="craft-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <TrendingUp className="w-5 h-5 text-teal" />
