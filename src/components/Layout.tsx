@@ -46,7 +46,7 @@ export function Layout({ children }: LayoutProps) {
   const closeSidebar = () => setSidebarOpen(false)
 
   return (
-    <div className="min-h-screen bg-craft-paper">
+    <div className="min-h-screen bg-craft-paper flex">
       {/* Mobile menu button */}
       <div className="lg:hidden fixed top-4 left-4 z-50">
         <Button
@@ -68,7 +68,7 @@ export function Layout({ children }: LayoutProps) {
       )}
 
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out lg:transform-none lg:static lg:flex lg:flex-col lg:w-64 lg:flex-shrink-0 ${
+      <div className={`fixed lg:relative inset-y-0 left-0 w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out lg:transform-none flex flex-col ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
       }`}>
         {/* Close button for mobile */}
@@ -83,7 +83,7 @@ export function Layout({ children }: LayoutProps) {
         </div>
 
         {/* Logo */}
-        <div className="flex items-center space-x-3 px-6 py-6 border-b border-gray-200">
+        <div className="flex items-center space-x-3 px-6 py-6 border-b border-gray-200 flex-shrink-0">
           <div className="relative">
             <div className="w-10 h-10 bg-teal rounded-xl flex items-center justify-center transform rotate-3">
               <Scissors className="w-6 h-6 text-white" />
@@ -135,14 +135,12 @@ export function Layout({ children }: LayoutProps) {
       </div>
 
       {/* Main Content */}
-      <div className="lg:flex lg:flex-1">
-        <div className="flex-1 lg:ml-0">
-          <main className="p-4 pt-16 lg:pt-8 lg:p-8 min-h-screen overflow-x-hidden">
-            <div className="max-w-full">
-              {children}
-            </div>
-          </main>
-        </div>
+      <div className="flex-1 min-w-0">
+        <main className="p-4 pt-16 lg:pt-8 lg:p-8 min-h-screen overflow-x-hidden">
+          <div className="max-w-full">
+            {children}
+          </div>
+        </main>
       </div>
     </div>
   )
