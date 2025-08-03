@@ -69,9 +69,9 @@ export default function AuthPage() {
       </nav>
 
       {/* Auth Form */}
-      <div className="flex-1 flex items-center justify-center px-6">
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6">
         <div className="w-full max-w-md">
-          <div className="craft-card p-8 relative">
+          <div className="craft-card p-6 sm:p-8 relative">
             <div className="text-center mb-8">
               <h1 className="text-2xl font-bold text-gray-900 mb-2">
                 {isLogin ? 'Welcome Back!' : 'Join Stock-Kit'}

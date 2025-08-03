@@ -139,7 +139,7 @@ export default function Materials() {
         {/* Header */}
         <div className="flex justify-between items-start">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">Materials</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Materials</h1>
             <p className="text-gray-600">Manage your raw materials and track stock levels.</p>
           </div>
           
@@ -173,7 +173,7 @@ export default function Materials() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card className="craft-card p-4">
             <div className="flex items-center justify-between">
               <div>

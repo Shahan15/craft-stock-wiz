@@ -143,7 +143,7 @@ export default function Dashboard() {
         {/* Header */}
         <div className="flex justify-between items-start">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
               Welcome back! 
               <span className="handwritten text-2xl text-craft-brown ml-2 transform -rotate-2 inline-block">
                 Let's craft something amazing
@@ -175,7 +175,7 @@ export default function Dashboard() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           <Card className="craft-card p-6">
             <div className="flex items-center justify-between">
               <div>

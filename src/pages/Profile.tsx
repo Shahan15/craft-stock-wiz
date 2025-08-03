@@ -135,7 +135,7 @@ export default function Profile() {
       <div className="max-w-2xl mx-auto space-y-8">
         {/* Header */}
         <div className="text-center">
-          <h1 className="text-3xl font-bold text-gray-900 handwritten">Profile Settings</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 handwritten">Profile Settings</h1>
           <p className="text-gray-600 mt-1">Manage your account and business information</p>
         </div>
 

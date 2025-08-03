@@ -247,7 +247,7 @@ export default function Integrations() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold relative inline-block">
+            <h1 className="text-2xl sm:text-3xl font-bold relative inline-block">
               Platform Integrations
               <svg className="absolute -bottom-1 left-0 w-full h-2" viewBox="0 0 100 8" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2 5 Q 50 1 98 4" stroke="hsl(var(--craft-orange))" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
