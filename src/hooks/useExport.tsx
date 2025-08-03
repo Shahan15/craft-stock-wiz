@@ -73,18 +73,21 @@ export const useExport = () => {
 
       if (error) throw error;
 
-      const flattenedOrders = (orders || []).map(order => ({
-        id: order.id,
-        product_name: Array.isArray(order.products) ? order.products[0]?.name : order.products?.name,
-        quantity_sold: order.quantity_sold,
-        selling_price: Array.isArray(order.products) ? order.products[0]?.selling_price : order.products?.selling_price,
-        cogs: Array.isArray(order.products) ? order.products[0]?.cogs : order.products?.cogs,
-        revenue: order.quantity_sold * (Array.isArray(order.products) ? order.products[0]?.selling_price || 0 : order.products?.selling_price || 0),
-        profit: order.quantity_sold * ((Array.isArray(order.products) ? order.products[0]?.selling_price || 0 : order.products?.selling_price || 0) - (Array.isArray(order.products) ? order.products[0]?.cogs || 0 : order.products?.cogs || 0)),
-        order_date: order.order_date,
-        status: order.status,
-        created_at: order.created_at
-      }));
+      const flattenedOrders = (orders || []).map((order: any) => {
+        const product = Array.isArray(order.products) ? order.products[0] : order.products;
+        return {
+          id: order.id,
+          product_name: product?.name || '',
+          quantity_sold: order.quantity_sold,
+          selling_price: product?.selling_price || 0,
+          cogs: product?.cogs || 0,
+          revenue: order.quantity_sold * (product?.selling_price || 0),
+          profit: order.quantity_sold * ((product?.selling_price || 0) - (product?.cogs || 0)),
+          order_date: order.order_date,
+          status: order.status,
+          created_at: order.created_at
+        };
+      });
 
       if (format === 'csv') {
         generateCSV(flattenedOrders, 'orders');
@@ -172,14 +175,16 @@ export const useExport = () => {
       const materials = materialsRes.data || [];
 
       // Calculate comprehensive analytics
-      const totalRevenue = orders.reduce((sum, order) => {
-        const price = Array.isArray(order.products) ? order.products[0]?.selling_price || 0 : order.products?.selling_price || 0;
+      const totalRevenue = orders.reduce((sum, order: any) => {
+        const product = Array.isArray(order.products) ? order.products[0] : order.products;
+        const price = product?.selling_price || 0;
         return sum + (order.quantity_sold * price);
       }, 0);
 
-      const totalProfit = orders.reduce((sum, order) => {
-        const price = Array.isArray(order.products) ? order.products[0]?.selling_price || 0 : order.products?.selling_price || 0;
-        const cogs = Array.isArray(order.products) ? order.products[0]?.cogs || 0 : order.products?.cogs || 0;
+      const totalProfit = orders.reduce((sum, order: any) => {
+        const product = Array.isArray(order.products) ? order.products[0] : order.products;
+        const price = product?.selling_price || 0;
+        const cogs = product?.cogs || 0;
         return sum + (order.quantity_sold * (price - cogs));
       }, 0);
 
@@ -197,14 +202,17 @@ export const useExport = () => {
           average_order_value: orders.length > 0 ? totalRevenue / orders.length : 0,
           export_date: new Date().toISOString()
         },
-        orders_summary: orders.map(order => ({
-          id: order.id,
-          product_name: Array.isArray(order.products) ? order.products[0]?.name : order.products?.name,
-          quantity_sold: order.quantity_sold,
-          revenue: order.quantity_sold * (Array.isArray(order.products) ? order.products[0]?.selling_price || 0 : order.products?.selling_price || 0),
-          profit: order.quantity_sold * ((Array.isArray(order.products) ? order.products[0]?.selling_price || 0 : order.products?.selling_price || 0) - (Array.isArray(order.products) ? order.products[0]?.cogs || 0 : order.products?.cogs || 0)),
-          order_date: order.order_date
-        })),
+        orders_summary: orders.map((order: any) => {
+          const product = Array.isArray(order.products) ? order.products[0] : order.products;
+          return {
+            id: order.id,
+            product_name: product?.name || '',
+            quantity_sold: order.quantity_sold,
+            revenue: order.quantity_sold * (product?.selling_price || 0),
+            profit: order.quantity_sold * ((product?.selling_price || 0) - (product?.cogs || 0)),
+            order_date: order.order_date
+          };
+        }),
         products_summary: products.map(product => ({
           id: product.id,
           name: product.name,
