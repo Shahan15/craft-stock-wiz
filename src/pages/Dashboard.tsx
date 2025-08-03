@@ -30,6 +30,8 @@ interface RecentOrder {
   order_date: string
   products: {
     name: string
+    selling_price: number
+    cogs: number
   } | null
 }
 
@@ -70,7 +72,7 @@ export default function Dashboard() {
           id,
           quantity_sold,
           order_date,
-          products!inner(name)
+          products!inner(name, selling_price, cogs)
         `)
         .eq('user_id', user?.id)
         .order('created_at', { ascending: false })
@@ -250,19 +252,30 @@ export default function Dashboard() {
               </div>
             ) : (
               <div className="space-y-4">
-                {recentOrders.map((order) => (
-                  <div key={order.id} className="flex items-center justify-between p-4 bg-green-50 border border-green-200 rounded-lg">
-                    <div>
-                      <p className="font-medium text-green-900">{order.products?.name || 'Unknown Product'}</p>
-                      <p className="text-green-700 text-sm">
-                        {new Date(order.order_date).toLocaleDateString()}
-                      </p>
+                {recentOrders.map((order) => {
+                  const profit = order.products ? (order.products.selling_price - order.products.cogs) * order.quantity_sold : 0
+                  const revenue = order.products ? order.products.selling_price * order.quantity_sold : 0
+                  
+                  return (
+                    <div key={order.id} className="p-4 bg-green-50 border border-green-200 rounded-lg">
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="font-medium text-green-900">{order.products?.name || 'Unknown Product'}</p>
+                        <div className="text-right">
+                          <p className="text-green-600 font-semibold">Qty: {order.quantity_sold}</p>
+                          <p className="text-green-700 text-sm">£{revenue.toFixed(2)} revenue</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <p className="text-green-700 text-sm">
+                          {new Date(order.order_date).toLocaleDateString()}
+                        </p>
+                        <p className={`font-semibold text-sm ${profit > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          £{profit.toFixed(2)} profit
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-green-600 font-semibold">
-                      Qty: {order.quantity_sold}
-                    </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             )}
           </Card>

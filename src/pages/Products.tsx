@@ -25,6 +25,7 @@ interface Material {
   name: string
   current_stock: number
   unit_of_measurement: string
+  cost_per_unit: number
 }
 
 interface Recipe {
@@ -75,7 +76,8 @@ export default function Products() {
               id,
               name,
               current_stock,
-              unit_of_measurement
+              unit_of_measurement,
+              cost_per_unit
             )
           )
         `)
@@ -87,7 +89,7 @@ export default function Products() {
       // Fetch materials for recipe builder
       const { data: materialsData, error: materialsError } = await supabase
         .from('materials')
-        .select('id, name, current_stock, unit_of_measurement')
+        .select('id, name, current_stock, unit_of_measurement, cost_per_unit')
         .eq('user_id', user?.id)
         .order('name', { ascending: true })
 

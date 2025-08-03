@@ -10,6 +10,7 @@ interface Material {
   name: string
   current_stock: number
   unit_of_measurement: string
+  cost_per_unit: number
 }
 
 interface Recipe {
@@ -56,6 +57,17 @@ export function ProductForm({ product, materials, onSave, onCancel }: ProductFor
     setAvailableMaterials(materials.filter(m => !usedMaterialIds.includes(m.id)))
   }, [materials, recipes])
 
+  const calculateCOGS = () => {
+    let totalCost = 0
+    for (const recipe of recipes) {
+      const material = getMaterialById(recipe.material_id)
+      if (material) {
+        totalCost += recipe.quantity_needed * material.cost_per_unit
+      }
+    }
+    return totalCost
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
@@ -69,12 +81,16 @@ export function ProductForm({ product, materials, onSave, onCancel }: ProductFor
 
     try {
       let productId = product?.id
+      const cogs = calculateCOGS()
 
       if (product) {
         // Update existing product
         const { error: productError } = await supabase
           .from('products')
-          .update(formData)
+          .update({
+            ...formData,
+            cogs
+          })
           .eq('id', product.id)
 
         if (productError) throw productError
@@ -92,6 +108,7 @@ export function ProductForm({ product, materials, onSave, onCancel }: ProductFor
           .from('products')
           .insert([{
             ...formData,
+            cogs,
             user_id: user?.id
           }])
           .select()
@@ -342,20 +359,37 @@ export function ProductForm({ product, materials, onSave, onCancel }: ProductFor
         )}
 
         {recipes.length > 0 && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h4 className="font-medium text-blue-900 mb-2">Recipe Summary</h4>
-            <div className="space-y-1 text-sm text-blue-800">
-              {recipes.map((recipe, index) => {
-                const material = getMaterialById(recipe.material_id)
-                return material ? (
-                  <div key={index} className="flex justify-between">
-                    <span>{recipe.quantity_needed} {material.unit_of_measurement} {material.name}</span>
-                    <span>({Math.floor(material.current_stock / recipe.quantity_needed)} max units)</span>
-                  </div>
-                ) : null
-              })}
-              <div className="border-t border-blue-300 pt-2 mt-2 font-semibold">
-                You can make {canMakeUnits()} units with current stock
+          <div className="space-y-4">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <h4 className="font-medium text-blue-900 mb-2">Recipe Summary</h4>
+              <div className="space-y-1 text-sm text-blue-800">
+                {recipes.map((recipe, index) => {
+                  const material = getMaterialById(recipe.material_id)
+                  const itemCost = material ? recipe.quantity_needed * material.cost_per_unit : 0
+                  return material ? (
+                    <div key={index} className="flex justify-between">
+                      <span>{recipe.quantity_needed} {material.unit_of_measurement} {material.name}</span>
+                      <span>£{itemCost.toFixed(2)}</span>
+                    </div>
+                  ) : null
+                })}
+                <div className="border-t border-blue-300 pt-2 mt-2 font-semibold flex justify-between">
+                  <span>Total COGS per unit:</span>
+                  <span>£{calculateCOGS().toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Selling Price:</span>
+                  <span>£{formData.selling_price.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between font-bold text-lg">
+                  <span>Profit per unit:</span>
+                  <span className={formData.selling_price - calculateCOGS() > 0 ? 'text-green-600' : 'text-red-600'}>
+                    £{(formData.selling_price - calculateCOGS()).toFixed(2)}
+                  </span>
+                </div>
+                <div className="text-xs text-blue-700 mt-2">
+                  You can make {canMakeUnits()} units with current stock
+                </div>
               </div>
             </div>
           </div>

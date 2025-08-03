@@ -180,6 +180,7 @@ export type Database = {
       }
       products: {
         Row: {
+          cogs: number
           created_at: string
           id: string
           name: string
@@ -189,6 +190,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          cogs?: number
           created_at?: string
           id?: string
           name: string
@@ -198,6 +200,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          cogs?: number
           created_at?: string
           id?: string
           name?: string
