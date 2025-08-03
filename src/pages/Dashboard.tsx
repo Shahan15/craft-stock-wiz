@@ -131,6 +131,12 @@ export default function Dashboard() {
           </div>
           
           <div className="flex space-x-4">
+            <Link to="/orders">
+              <Button variant="craft-warm" size="lg" className="font-semibold">
+                <Plus className="w-5 h-5 mr-2" />
+                Log Manual Sale
+              </Button>
+            </Link>
             <Link to="/materials">
               <Button variant="default">
                 <Plus className="w-4 h-4 mr-2" />
