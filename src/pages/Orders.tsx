@@ -243,17 +243,18 @@ export default function Orders() {
 
   return (
     <Layout>
-      <div className="space-y-8">
+      <div className="space-y-6 max-w-full overflow-hidden">
         {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="flex flex-col gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 handwritten">Manual Sales Log</h1>
-            <p className="text-gray-600 mt-1">Track sales from all channels (markets, social media, etc.)</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 handwritten">Manual Sales Log</h1>
+            <p className="text-gray-600 mt-1 text-sm sm:text-base">Track sales from all channels (markets, social media, etc.)</p>
           </div>
-          <div className="flex space-x-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <Button 
               variant="outline"
               onClick={() => exportOrders('csv')}
+              className="flex-1 sm:flex-none"
             >
               <Download className="w-4 h-4 mr-2" />
               Export CSV
@@ -261,60 +262,62 @@ export default function Orders() {
             <Button 
               variant="outline"
               onClick={() => exportOrders('json')}
+              className="flex-1 sm:flex-none"
             >
               <FileText className="w-4 h-4 mr-2" />
               Export JSON
             </Button>
             <Button 
               onClick={() => setShowAddModal(true)}
-              className="bg-craft-orange hover:bg-craft-orange/90 text-white font-semibold"
+              className="bg-craft-orange hover:bg-craft-orange/90 text-white font-semibold flex-1 sm:flex-none"
               size="lg"
             >
               <Plus className="w-5 h-5 mr-2" />
-              Log New Sale
+              <span className="hidden sm:inline">Log New Sale</span>
+              <span className="sm:hidden">New Sale</span>
             </Button>
           </div>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
           <Card className="craft-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-              <TrendingUp className="h-4 w-4 text-teal" />
+              <CardTitle className="text-xs sm:text-sm font-medium">Total Revenue</CardTitle>
+              <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 text-teal" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-teal">£{totalRevenue.toFixed(2)}</div>
+              <div className="text-lg sm:text-2xl font-bold text-teal">£{totalRevenue.toFixed(2)}</div>
             </CardContent>
           </Card>
 
           <Card className="craft-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Profit</CardTitle>
-              <TrendingUp className="h-4 w-4 text-green-600" />
+              <CardTitle className="text-xs sm:text-sm font-medium">Total Profit</CardTitle>
+              <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 text-green-600" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-green-600">£{totalProfit.toFixed(2)}</div>
+              <div className="text-lg sm:text-2xl font-bold text-green-600">£{totalProfit.toFixed(2)}</div>
             </CardContent>
           </Card>
 
           <Card className="craft-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Total Orders</CardTitle>
-              <ShoppingCart className="h-4 w-4 text-craft-orange" />
+              <CardTitle className="text-xs sm:text-sm font-medium">Total Orders</CardTitle>
+              <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4 text-craft-orange" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-craft-orange">{totalOrders}</div>
+              <div className="text-lg sm:text-2xl font-bold text-craft-orange">{totalOrders}</div>
             </CardContent>
           </Card>
 
           <Card className="craft-card">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Completed</CardTitle>
-              <Package className="h-4 w-4 text-teal" />
+              <CardTitle className="text-xs sm:text-sm font-medium">Completed</CardTitle>
+              <Package className="h-3 w-3 sm:h-4 sm:w-4 text-teal" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-teal">{completedOrders}</div>
+              <div className="text-lg sm:text-2xl font-bold text-teal">{completedOrders}</div>
             </CardContent>
           </Card>
         </div>
