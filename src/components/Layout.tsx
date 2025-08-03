@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { ReactNode, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '@/hooks/useAuth'
 import { Button } from '@/components/ui/button'
@@ -14,7 +14,9 @@ import {
   Link as LinkIcon,
   TrendingUp,
   FileText,
-  User
+  User,
+  Menu,
+  X
 } from 'lucide-react'
 
 interface LayoutProps {
@@ -24,6 +26,7 @@ interface LayoutProps {
 export function Layout({ children }: LayoutProps) {
   const { signOut } = useAuth()
   const location = useLocation()
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -40,10 +43,45 @@ export function Layout({ children }: LayoutProps) {
     await signOut()
   }
 
+  const closeSidebar = () => setSidebarOpen(false)
+
   return (
     <div className="min-h-screen bg-craft-paper">
+      {/* Mobile menu button */}
+      <div className="lg:hidden fixed top-4 left-4 z-50">
+        <Button
+          onClick={() => setSidebarOpen(true)}
+          variant="outline"
+          size="sm"
+          className="bg-white shadow-md"
+        >
+          <Menu className="w-5 h-5" />
+        </Button>
+      </div>
+
+      {/* Mobile sidebar overlay */}
+      {sidebarOpen && (
+        <div 
+          className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+          onClick={closeSidebar}
+        />
+      )}
+
       {/* Sidebar */}
-      <div className="fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-10">
+      <div className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      } lg:translate-x-0 lg:static lg:inset-0`}>
+        {/* Close button for mobile */}
+        <div className="lg:hidden absolute top-4 right-4">
+          <Button
+            onClick={closeSidebar}
+            variant="ghost"
+            size="sm"
+          >
+            <X className="w-5 h-5" />
+          </Button>
+        </div>
+
         {/* Logo */}
         <div className="flex items-center space-x-3 px-6 py-6 border-b border-gray-200">
           <div className="relative">
@@ -67,6 +105,7 @@ export function Layout({ children }: LayoutProps) {
                 <li key={item.name}>
                   <Link
                     to={item.href}
+                    onClick={closeSidebar}
                     className={`flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                       isActive
                         ? 'bg-teal/10 text-teal font-medium'
@@ -96,8 +135,8 @@ export function Layout({ children }: LayoutProps) {
       </div>
 
       {/* Main Content */}
-      <div className="ml-64">
-        <main className="p-8">
+      <div className="lg:ml-64">
+        <main className="p-4 sm:p-6 lg:p-8 pt-16 lg:pt-8">
           {children}
         </main>
       </div>
