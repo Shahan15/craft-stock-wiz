@@ -29,7 +29,8 @@ serve(async (req) => {
         },
         body: new URLSearchParams({
           grant_type: 'authorization_code',
-          client_id: Deno.env.get('ETSY_API_KEY')!,
+          client_id: Deno.env.get('ETSY_CLIENT_ID')!,
+          client_secret: Deno.env.get('ETSY_CLIENT_SECRET')!,
           redirect_uri: `${new URL(req.url).origin}/integrations/etsy/callback`,
           code: code,
           code_verifier: codeVerifier,
@@ -65,7 +66,7 @@ serve(async (req) => {
       const redirectUri = `${url.origin}/integrations/etsy/callback`;
       
       const scopes = 'listings_r listings_w transactions_r shops_r';
-      const authUrl = `https://www.etsy.com/oauth/connect?response_type=code&client_id=${Deno.env.get('ETSY_API_KEY')}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}&code_challenge=${codeChallenge}&code_challenge_method=S256`;
+      const authUrl = `https://www.etsy.com/oauth/connect?response_type=code&client_id=${Deno.env.get('ETSY_CLIENT_ID')}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${encodeURIComponent(scopes)}&code_challenge=${codeChallenge}&code_challenge_method=S256`;
       
       return new Response(JSON.stringify({ 
         authUrl,
