@@ -46,7 +46,7 @@ export function Layout({ children }: LayoutProps) {
   const closeSidebar = () => setSidebarOpen(false)
 
   return (
-    <div className="min-h-screen bg-craft-paper">
+    <div className="min-h-screen bg-craft-paper lg:flex">
       {/* Mobile menu button */}
       <div className="lg:hidden fixed top-4 left-4 z-50">
         <Button
@@ -68,9 +68,9 @@ export function Layout({ children }: LayoutProps) {
       )}
 
       {/* Sidebar */}
-      <div className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
-      } lg:translate-x-0 lg:static lg:inset-0`}>
+      <div className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg z-50 transform transition-transform duration-300 ease-in-out lg:transform-none lg:relative lg:w-64 lg:flex-shrink-0 ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+      }`}>
         {/* Close button for mobile */}
         <div className="lg:hidden absolute top-4 right-4">
           <Button
@@ -97,7 +97,7 @@ export function Layout({ children }: LayoutProps) {
         </div>
 
         {/* Navigation */}
-        <nav className="mt-8 px-4">
+        <nav className="mt-8 px-4 flex-1">
           <ul className="space-y-2">
             {navigation.map((item) => {
               const isActive = location.pathname === item.href
@@ -122,7 +122,7 @@ export function Layout({ children }: LayoutProps) {
         </nav>
 
         {/* Sign Out */}
-        <div className="absolute bottom-6 left-4 right-4">
+        <div className="p-4">
           <Button
             onClick={handleSignOut}
             variant="ghost"
@@ -135,7 +135,7 @@ export function Layout({ children }: LayoutProps) {
       </div>
 
       {/* Main Content */}
-      <div className="lg:ml-64">
+      <div className="flex-1 lg:ml-0">
         <main className="p-4 sm:p-6 lg:p-8 pt-16 lg:pt-8">
           {children}
         </main>
