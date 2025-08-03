@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { supabase } from '@/integrations/supabase/client'
 import { useAuth } from '@/hooks/useAuth'
+import { toast } from 'sonner'
 import { 
   Plus, 
   AlertTriangle, 
@@ -13,7 +14,8 @@ import {
   ShoppingCart,
   TrendingUp,
   Calendar,
-  Sparkles
+  Sparkles,
+  Bell
 } from 'lucide-react'
 
 interface LowStockMaterial {
@@ -51,6 +53,26 @@ export default function Dashboard() {
       fetchDashboardData()
     }
   }, [user])
+
+  // Check for critical stock alerts on load
+  useEffect(() => {
+    if (lowStockMaterials.length > 0) {
+      const outOfStock = lowStockMaterials.filter(m => m.current_stock === 0)
+      const criticallyLow = lowStockMaterials.filter(m => m.current_stock > 0 && m.current_stock <= m.low_stock_threshold * 0.3)
+      
+      if (outOfStock.length > 0) {
+        toast.error(`${outOfStock.length} material(s) are out of stock!`, {
+          description: `Check your inventory: ${outOfStock.map(m => m.name).join(', ')}`,
+          duration: 6000,
+        })
+      } else if (criticallyLow.length > 0) {
+        toast.warning(`${criticallyLow.length} material(s) are critically low!`, {
+          description: `Consider restocking: ${criticallyLow.map(m => m.name).join(', ')}`,
+          duration: 5000,
+        })
+      }
+    }
+  }, [lowStockMaterials])
 
   const fetchDashboardData = async () => {
     try {
@@ -153,7 +175,7 @@ export default function Dashboard() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Card className="craft-card p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -189,19 +211,37 @@ export default function Dashboard() {
               </div>
             </div>
           </Card>
+
+          <Card className="craft-card p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-600 text-sm font-medium">Stock Alerts</p>
+                <p className={`text-3xl font-bold mt-1 ${lowStockMaterials.length > 0 ? 'text-red-500' : 'text-green-500'}`}>
+                  {lowStockMaterials.length}
+                </p>
+              </div>
+              <div className={`p-3 rounded-full ${lowStockMaterials.length > 0 ? 'bg-red-100' : 'bg-green-100'}`}>
+                {lowStockMaterials.length > 0 ? (
+                  <Bell className="w-6 h-6 text-red-500" />
+                ) : (
+                  <Sparkles className="w-6 h-6 text-green-500" />
+                )}
+              </div>
+            </div>
+          </Card>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Low Stock Alerts */}
+          {/* Inventory Alerts */}
           <Card className="craft-card p-6">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-xl font-bold text-gray-900 flex items-center">
                 <AlertTriangle className="w-5 h-5 text-red-500 mr-2" />
-                Low Stock Alerts
+                Inventory Alerts
               </h2>
               <Link to="/materials">
                 <Button variant="outline" size="sm">
-                  View All
+                  Manage Stock
                 </Button>
               </Link>
             </div>
@@ -213,20 +253,65 @@ export default function Dashboard() {
                 <p className="text-gray-500 text-sm">You're doing great managing your inventory.</p>
               </div>
             ) : (
-              <div className="space-y-4">
-                {lowStockMaterials.map((material) => (
-                  <div key={material.id} className="flex items-center justify-between p-4 bg-red-50 border border-red-200 rounded-lg">
-                    <div>
-                      <p className="font-medium text-red-900">{material.name}</p>
-                      <p className="text-red-700 text-sm">
-                        {material.current_stock} {material.unit_of_measurement} remaining
-                      </p>
+              <div className="space-y-3">
+                {lowStockMaterials.map((material) => {
+                  const isOutOfStock = material.current_stock === 0
+                  const isCriticallyLow = material.current_stock > 0 && material.current_stock <= material.low_stock_threshold * 0.5
+                  
+                  return (
+                    <div 
+                      key={material.id} 
+                      className={`p-4 rounded-lg border ${
+                        isOutOfStock 
+                          ? 'bg-red-100 border-red-300' 
+                          : isCriticallyLow 
+                          ? 'bg-red-50 border-red-200' 
+                          : 'bg-yellow-50 border-yellow-200'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="flex items-center space-x-2">
+                            <p className={`font-medium ${isOutOfStock ? 'text-red-900' : isCriticallyLow ? 'text-red-800' : 'text-yellow-800'}`}>
+                              {material.name}
+                            </p>
+                            {isOutOfStock && (
+                              <span className="text-xs bg-red-600 text-white px-2 py-1 rounded-full font-semibold">
+                                OUT OF STOCK
+                              </span>
+                            )}
+                            {isCriticallyLow && !isOutOfStock && (
+                              <span className="text-xs bg-red-500 text-white px-2 py-1 rounded-full font-semibold">
+                                CRITICAL
+                              </span>
+                            )}
+                          </div>
+                          <p className={`text-sm ${isOutOfStock ? 'text-red-700' : isCriticallyLow ? 'text-red-600' : 'text-yellow-700'}`}>
+                            {material.current_stock} {material.unit_of_measurement} remaining
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className={`text-sm ${isOutOfStock ? 'text-red-600' : isCriticallyLow ? 'text-red-500' : 'text-yellow-600'}`}>
+                            Threshold: {material.low_stock_threshold} {material.unit_of_measurement}
+                          </p>
+                          <Link to="/materials">
+                            <Button 
+                              size="sm" 
+                              variant="outline" 
+                              className={`mt-1 text-xs ${
+                                isOutOfStock 
+                                  ? 'border-red-300 text-red-600 hover:bg-red-50' 
+                                  : 'border-yellow-300 text-yellow-600 hover:bg-yellow-50'
+                              }`}
+                            >
+                              Restock
+                            </Button>
+                          </Link>
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-red-600 text-sm">
-                      Low: {material.low_stock_threshold} {material.unit_of_measurement}
-                    </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
             )}
           </Card>
