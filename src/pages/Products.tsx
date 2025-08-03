@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { supabase } from '@/integrations/supabase/client'
 import { useAuth } from '@/hooks/useAuth'
+import { useExport } from '@/hooks/useExport'
 import { 
   Plus, 
   Search, 
@@ -16,7 +17,9 @@ import {
   DollarSign,
   Eye,
   Image as ImageIcon,
-  AlertCircle
+  AlertCircle,
+  Download,
+  FileText
 } from 'lucide-react'
 import { ProductForm } from '@/components/ProductForm'
 
@@ -46,6 +49,7 @@ interface Product {
 
 export default function Products() {
   const { user } = useAuth()
+  const { exportProducts } = useExport()
   const [products, setProducts] = useState<Product[]>([])
   const [materials, setMaterials] = useState<Material[]>([])
   const [loading, setLoading] = useState(true)
@@ -192,13 +196,29 @@ export default function Products() {
             <p className="text-gray-600">Manage your finished products and build recipes.</p>
           </div>
           
-          <Button 
-            onClick={() => setShowForm(true)}
-            className="bg-craft-orange hover:bg-craft-orange/90 text-white"
-          >
-            <Plus className="w-4 h-4 mr-2" />
-            Add Product
-          </Button>
+          <div className="flex space-x-3">
+            <Button 
+              variant="outline"
+              onClick={() => exportProducts('csv')}
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Export CSV
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={() => exportProducts('json')}
+            >
+              <FileText className="w-4 h-4 mr-2" />
+              Export JSON
+            </Button>
+            <Button 
+              onClick={() => setShowForm(true)}
+              className="bg-craft-orange hover:bg-craft-orange/90 text-white"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Add Product
+            </Button>
+          </div>
         </div>
 
         {/* Stats Cards */}

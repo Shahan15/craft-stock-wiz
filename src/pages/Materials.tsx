@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog'
 import { supabase } from '@/integrations/supabase/client'
 import { useAuth } from '@/hooks/useAuth'
+import { useExport } from '@/hooks/useExport'
 import { 
   Plus, 
   Search, 
@@ -16,7 +17,8 @@ import {
   Filter,
   Download,
   Upload,
-  Eye
+  Eye,
+  FileText
 } from 'lucide-react'
 import { MaterialForm } from '@/components/MaterialForm'
 
@@ -33,6 +35,7 @@ interface Material {
 
 export default function Materials() {
   const { user } = useAuth()
+  const { exportMaterials } = useExport()
   const [materials, setMaterials] = useState<Material[]>([])
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
@@ -145,9 +148,19 @@ export default function Materials() {
               <Upload className="w-4 h-4 mr-2" />
               Import
             </Button>
-            <Button variant="outline">
+            <Button 
+              variant="outline"
+              onClick={() => exportMaterials('csv')}
+            >
               <Download className="w-4 h-4 mr-2" />
-              Export
+              Export CSV
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={() => exportMaterials('json')}
+            >
+              <FileText className="w-4 h-4 mr-2" />
+              Export JSON
             </Button>
             <Button 
               onClick={() => setShowForm(true)}

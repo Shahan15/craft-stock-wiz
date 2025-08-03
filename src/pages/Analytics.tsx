@@ -13,12 +13,17 @@ import {
   Coins,
   TrendingDown,
   Activity,
-  Filter
+  Filter,
+  Download,
+  FileText,
+  Database
 } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useExport } from '@/hooks/useExport';
 import { toast } from 'sonner';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
 
 interface OrderWithProduct {
   id: string;
@@ -66,6 +71,7 @@ interface AnalyticsData {
 
 export default function Analytics() {
   const { user } = useAuth();
+  const { exportOrders, exportProducts, exportMaterials, exportAnalytics, exportAllData } = useExport();
   const [data, setData] = useState<AnalyticsData>({
     totalRevenue: 0,
     totalProfit: 0,
@@ -258,18 +264,47 @@ export default function Analytics() {
             <p className="text-gray-600 mt-1">Track your performance and growth</p>
           </div>
           
-          <div className="flex items-center space-x-2">
-            <Filter className="w-4 h-4 text-gray-500" />
-            <Select value={timeRange} onValueChange={setTimeRange}>
-              <SelectTrigger className="w-40">
-                <SelectValue placeholder="Time Range" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Time</SelectItem>
-                <SelectItem value="30days">Last 30 Days</SelectItem>
-                <SelectItem value="7days">Last 7 Days</SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2">
+              <Filter className="w-4 h-4 text-gray-500" />
+              <Select value={timeRange} onValueChange={setTimeRange}>
+                <SelectTrigger className="w-40">
+                  <SelectValue placeholder="Time Range" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Time</SelectItem>
+                  <SelectItem value="30days">Last 30 Days</SelectItem>
+                  <SelectItem value="7days">Last 7 Days</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="flex items-center space-x-2">
+              <Button 
+                variant="outline" 
+                onClick={() => exportAnalytics('csv')}
+                className="flex items-center space-x-2"
+              >
+                <Download className="w-4 h-4" />
+                <span>Export CSV</span>
+              </Button>
+              <Button 
+                variant="outline"
+                onClick={() => exportAnalytics('json')}
+                className="flex items-center space-x-2"
+              >
+                <FileText className="w-4 h-4" />
+                <span>Export JSON</span>
+              </Button>
+              <Button 
+                variant="craft-warm"
+                onClick={exportAllData}
+                className="flex items-center space-x-2"
+              >
+                <Database className="w-4 h-4" />
+                <span>Full Backup</span>
+              </Button>
+            </div>
           </div>
         </div>
 

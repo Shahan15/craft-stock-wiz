@@ -10,12 +10,15 @@ import {
   Package,
   TrendingUp,
   Filter,
-  Search
+  Search,
+  Download,
+  FileText
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { useExport } from '@/hooks/useExport';
 import { toast } from 'sonner';
 
 interface Order {
@@ -42,6 +45,7 @@ interface Product {
 
 export default function Orders() {
   const { user } = useAuth();
+  const { exportOrders } = useExport();
   const [orders, setOrders] = useState<Order[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -246,14 +250,30 @@ export default function Orders() {
             <h1 className="text-3xl font-bold text-gray-900 handwritten">Manual Sales Log</h1>
             <p className="text-gray-600 mt-1">Track sales from all channels (markets, social media, etc.)</p>
           </div>
-          <Button 
-            onClick={() => setShowAddModal(true)}
-            className="bg-craft-orange hover:bg-craft-orange/90 text-white font-semibold"
-            size="lg"
-          >
-            <Plus className="w-5 h-5 mr-2" />
-            Log New Sale
-          </Button>
+          <div className="flex space-x-3">
+            <Button 
+              variant="outline"
+              onClick={() => exportOrders('csv')}
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Export CSV
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={() => exportOrders('json')}
+            >
+              <FileText className="w-4 h-4 mr-2" />
+              Export JSON
+            </Button>
+            <Button 
+              onClick={() => setShowAddModal(true)}
+              className="bg-craft-orange hover:bg-craft-orange/90 text-white font-semibold"
+              size="lg"
+            >
+              <Plus className="w-5 h-5 mr-2" />
+              Log New Sale
+            </Button>
+          </div>
         </div>
 
         {/* Stats Cards */}
