@@ -141,36 +141,38 @@ export default function Dashboard() {
     <Layout>
       <div className="space-y-8">
         {/* Header */}
-        <div className="flex justify-between items-start">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="grid gap-1">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
               Welcome back! 
-              <span className="handwritten text-2xl text-craft-brown ml-2 transform -rotate-2 inline-block">
+              <span className="handwritten text-xl sm:text-2xl text-craft-brown ml-2 transform -rotate-2 inline-block">
                 Let's craft something amazing
               </span>
             </h1>
             <p className="text-gray-600">Here's what's happening with your inventory today.</p>
           </div>
           
-          <div className="flex space-x-4">
-            <Link to="/orders">
-              <Button variant="craft-warm" size="lg" className="font-semibold">
-                <Plus className="w-5 h-5 mr-2" />
-                Log Manual Sale
-              </Button>
-            </Link>
-            <Link to="/materials">
-              <Button variant="default">
-                <Plus className="w-4 h-4 mr-2" />
-                Add Material
-              </Button>
-            </Link>
-            <Link to="/products">
-              <Button variant="craft-warm">
-                <Plus className="w-4 h-4 mr-2" />
-                Add Product
-              </Button>
-            </Link>
+          <div className="flex-shrink-0">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Link to="/orders">
+                <Button variant="craft-warm" size="lg" className="font-semibold w-full sm:w-auto">
+                  <Plus className="w-5 h-5 mr-2" />
+                  Log Manual Sale
+                </Button>
+              </Link>
+              <Link to="/materials">
+                <Button variant="default" className="w-full sm:w-auto">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Material
+                </Button>
+              </Link>
+              <Link to="/products">
+                <Button variant="craft-warm" className="w-full sm:w-auto">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Add Product
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
 

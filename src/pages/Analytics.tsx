@@ -258,52 +258,54 @@ export default function Analytics() {
     <Layout>
       <div className="space-y-8">
         {/* Header */}
-        <div className="flex justify-between items-start">
-          <div>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="grid gap-1">
             <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 handwritten">Business Analytics</h1>
-            <p className="text-gray-600 mt-1">Track your performance and growth</p>
+            <p className="text-gray-600">Track your performance and growth</p>
           </div>
           
-          <div className="flex items-center space-x-3">
-            <div className="flex items-center space-x-2">
-              <Filter className="w-4 h-4 text-gray-500" />
-              <Select value={timeRange} onValueChange={setTimeRange}>
-                <SelectTrigger className="w-40">
-                  <SelectValue placeholder="Time Range" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Time</SelectItem>
-                  <SelectItem value="30days">Last 30 Days</SelectItem>
-                  <SelectItem value="7days">Last 7 Days</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div className="flex items-center space-x-2">
-              <Button 
-                variant="outline" 
-                onClick={() => exportAnalytics('csv')}
-                className="flex items-center space-x-2"
-              >
-                <Download className="w-4 h-4" />
-                <span>Export CSV</span>
-              </Button>
-              <Button 
-                variant="outline"
-                onClick={() => exportAnalytics('json')}
-                className="flex items-center space-x-2"
-              >
-                <FileText className="w-4 h-4" />
-                <span>Export JSON</span>
-              </Button>
-              <Button 
-                variant="craft-warm"
-                onClick={exportAllData}
-                className="flex items-center space-x-2"
-              >
-                <Database className="w-4 h-4" />
-                <span>Full Backup</span>
-              </Button>
+          <div className="flex-shrink-0">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+              <div className="flex items-center space-x-2">
+                <Filter className="w-4 h-4 text-gray-500" />
+                <Select value={timeRange} onValueChange={setTimeRange}>
+                  <SelectTrigger className="w-40">
+                    <SelectValue placeholder="Time Range" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Time</SelectItem>
+                    <SelectItem value="30days">Last 30 Days</SelectItem>
+                    <SelectItem value="7days">Last 7 Days</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-2">
+                <Button 
+                  variant="outline" 
+                  onClick={() => exportAnalytics('csv')}
+                  className="w-full sm:w-auto"
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  <span>Export CSV</span>
+                </Button>
+                <Button 
+                  variant="outline"
+                  onClick={() => exportAnalytics('json')}
+                  className="w-full sm:w-auto"
+                >
+                  <FileText className="w-4 h-4 mr-2" />
+                  <span>Export JSON</span>
+                </Button>
+                <Button 
+                  variant="craft-warm"
+                  onClick={exportAllData}
+                  className="w-full sm:w-auto"
+                >
+                  <Database className="w-4 h-4 mr-2" />
+                  <span>Full Backup</span>
+                </Button>
+              </div>
             </div>
           </div>
         </div>

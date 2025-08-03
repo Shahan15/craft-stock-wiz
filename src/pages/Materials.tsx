@@ -137,38 +137,42 @@ export default function Materials() {
     <Layout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex justify-between items-start">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Materials</h1>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="grid gap-1">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Materials</h1>
             <p className="text-gray-600">Manage your raw materials and track stock levels.</p>
           </div>
           
-          <div className="flex space-x-3">
-            <Button variant="outline">
-              <Upload className="w-4 h-4 mr-2" />
-              Import
-            </Button>
-            <Button 
-              variant="outline"
-              onClick={() => exportMaterials('csv')}
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Export CSV
-            </Button>
-            <Button 
-              variant="outline"
-              onClick={() => exportMaterials('json')}
-            >
-              <FileText className="w-4 h-4 mr-2" />
-              Export JSON
-            </Button>
-            <Button 
-              onClick={() => setShowForm(true)}
-              className=""
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Material
-            </Button>
+          <div className="flex-shrink-0">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Button variant="outline" className="w-full sm:w-auto">
+                <Upload className="w-4 h-4 mr-2" />
+                Import
+              </Button>
+              <Button 
+                variant="outline"
+                onClick={() => exportMaterials('csv')}
+                className="w-full sm:w-auto"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Export CSV
+              </Button>
+              <Button 
+                variant="outline"
+                onClick={() => exportMaterials('json')}
+                className="w-full sm:w-auto"
+              >
+                <FileText className="w-4 h-4 mr-2" />
+                Export JSON
+              </Button>
+              <Button 
+                onClick={() => setShowForm(true)}
+                className="w-full sm:w-auto"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add Material
+              </Button>
+            </div>
           </div>
         </div>
 

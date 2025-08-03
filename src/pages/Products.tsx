@@ -190,34 +190,38 @@ export default function Products() {
     <Layout>
       <div className="space-y-6">
         {/* Header */}
-        <div className="flex justify-between items-start">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Products</h1>
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="grid gap-1">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Products</h1>
             <p className="text-gray-600">Manage your finished products and build recipes.</p>
           </div>
           
-          <div className="flex space-x-3">
-            <Button 
-              variant="outline"
-              onClick={() => exportProducts('csv')}
-            >
-              <Download className="w-4 h-4 mr-2" />
-              Export CSV
-            </Button>
-            <Button 
-              variant="outline"
-              onClick={() => exportProducts('json')}
-            >
-              <FileText className="w-4 h-4 mr-2" />
-              Export JSON
-            </Button>
-            <Button 
-              onClick={() => setShowForm(true)}
-              className="bg-craft-orange hover:bg-craft-orange/90 text-white"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Product
-            </Button>
+          <div className="flex-shrink-0">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Button 
+                variant="outline"
+                onClick={() => exportProducts('csv')}
+                className="w-full sm:w-auto"
+              >
+                <Download className="w-4 h-4 mr-2" />
+                Export CSV
+              </Button>
+              <Button 
+                variant="outline"
+                onClick={() => exportProducts('json')}
+                className="w-full sm:w-auto"
+              >
+                <FileText className="w-4 h-4 mr-2" />
+                Export JSON
+              </Button>
+              <Button 
+                onClick={() => setShowForm(true)}
+                className="bg-craft-orange hover:bg-craft-orange/90 text-white w-full sm:w-auto"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add Product
+              </Button>
+            </div>
           </div>
         </div>
 
