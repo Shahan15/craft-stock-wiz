@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card'
 import { supabase } from '@/integrations/supabase/client'
 import { useAuth } from '@/hooks/useAuth'
 import { toast } from 'sonner'
+import { DashboardSkeleton } from '@/components/DashboardSkeleton'
 import { 
   Plus, 
   AlertTriangle, 
@@ -17,6 +18,7 @@ import {
   Sparkles,
   Bell
 } from 'lucide-react'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 
 interface LowStockMaterial {
   id: string
@@ -127,12 +129,7 @@ export default function Dashboard() {
   if (loading) {
     return (
       <Layout>
-        <div className="flex items-center justify-center h-64">
-          <div className="text-center">
-            <div className="w-8 h-8 border-4 border-teal border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p className="text-gray-600">Loading your dashboard...</p>
-          </div>
-        </div>
+        <DashboardSkeleton />
       </Layout>
     )
   }
@@ -153,21 +150,53 @@ export default function Dashboard() {
           </div>
           
           <div className="flex-shrink-0">
-            <div className="flex flex-col sm:flex-row gap-2">
+            {/* Mobile: Primary action + dropdown */}
+            <div className="flex sm:hidden gap-2">
+              <Link to="/orders" className="flex-1">
+                <Button variant="craft-warm" size="lg" className="font-semibold w-full">
+                  <Plus className="w-5 h-5 mr-2" />
+                  Log Sale
+                </Button>
+              </Link>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="lg">
+                    <Plus className="w-5 h-5" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem asChild>
+                    <Link to="/materials" className="flex items-center w-full">
+                      <Package className="w-4 h-4 mr-2" />
+                      Add Material
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/products" className="flex items-center w-full">
+                      <Palette className="w-4 h-4 mr-2" />
+                      Add Product
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+            
+            {/* Desktop: All buttons visible */}
+            <div className="hidden sm:flex gap-2">
               <Link to="/orders">
-                <Button variant="craft-warm" size="lg" className="font-semibold w-full sm:w-auto">
+                <Button variant="craft-warm" size="lg" className="font-semibold">
                   <Plus className="w-5 h-5 mr-2" />
                   Log Manual Sale
                 </Button>
               </Link>
               <Link to="/materials">
-                <Button variant="default" className="w-full sm:w-auto">
+                <Button variant="default">
                   <Plus className="w-4 h-4 mr-2" />
                   Add Material
                 </Button>
               </Link>
               <Link to="/products">
-                <Button variant="craft-warm" className="w-full sm:w-auto">
+                <Button variant="craft-warm">
                   <Plus className="w-4 h-4 mr-2" />
                   Add Product
                 </Button>

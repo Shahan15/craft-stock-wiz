@@ -47,8 +47,8 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen bg-craft-paper flex">
-      {/* Mobile menu button */}
-      <div className="lg:hidden fixed top-4 left-4 z-50">
+      {/* Mobile header */}
+      <div className="lg:hidden sticky top-0 z-40 bg-white border-b border-gray-200 p-4 flex items-center gap-3">
         <Button
           onClick={() => setSidebarOpen(true)}
           variant="outline"
@@ -57,6 +57,9 @@ export function Layout({ children }: LayoutProps) {
         >
           <Menu className="w-5 h-5" />
         </Button>
+        <h1 className="text-lg font-semibold text-gray-900 flex-1 truncate">
+          Stock-Kit
+        </h1>
       </div>
 
       {/* Mobile sidebar overlay */}
@@ -136,7 +139,7 @@ export function Layout({ children }: LayoutProps) {
 
       {/* Main Content */}
       <div className="flex-1 min-w-0">
-        <main className="p-4 pt-16 lg:pt-8 md:p-8 min-h-screen overflow-x-hidden">
+        <main className="p-4 lg:p-8 min-h-screen overflow-x-hidden">
           <div className="max-w-full">
             {children}
           </div>
