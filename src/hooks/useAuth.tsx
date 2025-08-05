@@ -8,7 +8,7 @@ export function useAuth() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Set up auth state listener FIRST
+    // Set up auth state listener 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
         setSession(session)
@@ -16,13 +16,6 @@ export function useAuth() {
         setLoading(false)
       }
     )
-
-    // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-      setUser(session?.user ?? null)
-      setLoading(false)
-    })
 
     return () => subscription.unsubscribe()
   }, [])

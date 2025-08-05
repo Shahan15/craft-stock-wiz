@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { supabase } from '@/integrations/supabase/client'
 import { useAuth } from '@/hooks/useAuth'
 import { Plus, X, Minus, Upload, AlertCircle } from 'lucide-react'
+import { toast } from 'sonner'
 
 interface Material {
   id: string
@@ -38,6 +39,8 @@ export function ProductForm({ product, materials, onSave, onCancel }: ProductFor
   const { user } = useAuth()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [uploadingImage, setUploadingImage] = useState(false)
+  const [imagePreview, setImagePreview] = useState<string | null>(product?.photo_url || null)
   
   const [formData, setFormData] = useState({
     name: product?.name || '',
@@ -66,6 +69,46 @@ export function ProductForm({ product, materials, onSave, onCancel }: ProductFor
       }
     }
     return totalCost
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    try {
+      setUploadingImage(true)
+      setError('')
+
+      // Create unique filename
+      const fileExt = file.name.split('.').pop()
+      const fileName = `${user?.id}/${Date.now()}.${fileExt}`
+
+      // Upload to Supabase Storage
+      const { data, error: uploadError } = await supabase.storage
+        .from('product-images')
+        .upload(fileName, file)
+
+      if (uploadError) throw uploadError
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('product-images')
+        .getPublicUrl(data.path)
+
+      setFormData(prev => ({ ...prev, photo_url: publicUrl }))
+      setImagePreview(publicUrl)
+      toast.success('Image uploaded successfully!')
+    } catch (err: any) {
+      setError(err.message || 'Failed to upload image')
+      toast.error('Failed to upload image')
+    } finally {
+      setUploadingImage(false)
+    }
+  }
+
+  const removeImage = () => {
+    setFormData(prev => ({ ...prev, photo_url: '' }))
+    setImagePreview(null)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -235,17 +278,42 @@ export function ProductForm({ product, materials, onSave, onCancel }: ProductFor
           </div>
 
           <div>
-            <label htmlFor="photo_url" className="block text-sm font-medium text-gray-700 mb-1">
-              Photo URL
+            <label htmlFor="photo_upload" className="block text-sm font-medium text-gray-700 mb-1">
+              Product Image
             </label>
-            <input
-              id="photo_url"
-              type="url"
-              value={formData.photo_url}
-              onChange={(e) => setFormData(prev => ({ ...prev, photo_url: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-craft-orange focus:border-transparent"
-              placeholder="https://..."
-            />
+            <div className="space-y-3">
+              <input
+                id="photo_upload"
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-craft-orange focus:border-transparent"
+              />
+              {imagePreview && (
+                <div className="relative">
+                  <img 
+                    src={imagePreview} 
+                    alt="Product preview" 
+                    className="w-32 h-32 object-cover rounded-lg border border-gray-200"
+                  />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={removeImage}
+                    className="absolute -top-2 -right-2 h-6 w-6 rounded-full p-0 bg-red-100 hover:bg-red-200 border-red-300"
+                  >
+                    <X className="h-3 w-3 text-red-600" />
+                  </Button>
+                </div>
+              )}
+              {uploadingImage && (
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <div className="w-4 h-4 border-2 border-craft-orange border-t-transparent rounded-full animate-spin"></div>
+                  Uploading image...
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

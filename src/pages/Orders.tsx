@@ -12,7 +12,9 @@ import {
   Filter,
   Search,
   Download,
-  FileText
+  FileText,
+  Edit,
+  Trash2
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -20,6 +22,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { useExport } from '@/hooks/useExport';
 import { toast } from 'sonner';
+import { OrdersSkeleton } from '@/components/OrdersSkeleton';
 
 interface Order {
   id: string;
@@ -52,6 +55,8 @@ export default function Orders() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editingOrder, setEditingOrder] = useState<Order | null>(null);
   const [newOrder, setNewOrder] = useState({
     product_id: '',
     quantity_sold: 1,
@@ -200,6 +205,153 @@ export default function Orders() {
     }
   };
 
+  const handleEditOrder = (order: Order) => {
+    setEditingOrder(order);
+    setNewOrder({
+      product_id: order.product_id,
+      quantity_sold: order.quantity_sold,
+      status: order.status,
+      order_date: order.order_date,
+      sale_price: order.sale_price || order.products?.selling_price || 0,
+      useCustomPrice: !!order.sale_price
+    });
+    setShowEditModal(true);
+  };
+
+  const handleUpdateOrder = async () => {
+    if (!editingOrder) return;
+    
+    try {
+      setLoading(true);
+      
+      const selectedProduct = products.find(p => p.id === newOrder.product_id);
+      if (!selectedProduct) {
+        toast.error('Please select a valid product');
+        return;
+      }
+
+      const actualSalePrice = newOrder.useCustomPrice && newOrder.sale_price > 0 
+        ? newOrder.sale_price 
+        : selectedProduct.selling_price;
+
+      // Calculate quantity difference for inventory adjustment
+      const quantityDifference = newOrder.quantity_sold - editingOrder.quantity_sold;
+
+      const orderData = {
+        product_id: newOrder.product_id,
+        quantity_sold: Number(newOrder.quantity_sold),
+        status: newOrder.status,
+        order_date: newOrder.order_date,
+        ...(newOrder.useCustomPrice && newOrder.sale_price > 0 && { sale_price: actualSalePrice })
+      };
+
+      const { error: orderError } = await supabase
+        .from('orders')
+        .update(orderData)
+        .eq('id', editingOrder.id);
+
+      if (orderError) throw orderError;
+
+      // Adjust inventory based on quantity change
+      if (quantityDifference !== 0 && newOrder.status === 'Completed') {
+        if (quantityDifference > 0) {
+          // More items sold, deduct additional materials
+          await deductMaterialsFromInventory(newOrder.product_id, quantityDifference);
+        } else {
+          // Fewer items sold, add back materials
+          await restoreMaterialsToInventory(newOrder.product_id, Math.abs(quantityDifference));
+        }
+      }
+
+      toast.success('Order updated successfully!');
+      setShowEditModal(false);
+      setEditingOrder(null);
+      resetOrderForm();
+      fetchOrders();
+    } catch (error) {
+      console.error('Error updating order:', error);
+      toast.error('Failed to update order');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteOrder = async (orderId: string) => {
+    const order = orders.find(o => o.id === orderId);
+    if (!order) return;
+
+    if (!confirm('Are you sure you want to delete this order? Materials will be restored to inventory.')) {
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      // Restore materials to inventory if order was completed
+      if (order.status === 'Completed') {
+        await restoreMaterialsToInventory(order.product_id, order.quantity_sold);
+      }
+
+      const { error } = await supabase
+        .from('orders')
+        .delete()
+        .eq('id', orderId);
+
+      if (error) throw error;
+
+      toast.success('Order deleted successfully! Materials have been restored to inventory.');
+      fetchOrders();
+    } catch (error) {
+      console.error('Error deleting order:', error);
+      toast.error('Failed to delete order');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const restoreMaterialsToInventory = async (productId: string, quantityToRestore: number) => {
+    try {
+      // Get the product recipe
+      const { data: recipes, error: recipeError } = await supabase
+        .from('recipes')
+        .select(`
+          material_id,
+          quantity_needed,
+          materials!inner(current_stock)
+        `)
+        .eq('product_id', productId);
+
+      if (recipeError) throw recipeError;
+
+      // Restore materials for each recipe item
+      for (const recipe of recipes || []) {
+        const totalToRestore = recipe.quantity_needed * quantityToRestore;
+        
+        // Get current stock for this material
+        const { data: materialData, error: materialError } = await supabase
+          .from('materials')
+          .select('current_stock')
+          .eq('id', recipe.material_id)
+          .single();
+
+        if (materialError) throw materialError;
+
+        const currentStock = materialData?.current_stock || 0;
+        const newStock = currentStock + totalToRestore;
+
+        const { error: updateError } = await supabase
+          .from('materials')
+          .update({ current_stock: newStock })
+          .eq('id', recipe.material_id);
+
+        if (updateError) throw updateError;
+      }
+    } catch (error) {
+      console.error('Error restoring materials:', error);
+      toast.error('Failed to restore materials to inventory');
+    }
+  };
+
   const resetOrderForm = () => {
     setNewOrder({
       product_id: '',
@@ -234,9 +386,7 @@ export default function Orders() {
   if (loading) {
     return (
       <Layout>
-        <div className="flex items-center justify-center h-64">
-          <div className="w-8 h-8 border-4 border-teal border-t-transparent rounded-full animate-spin"></div>
-        </div>
+        <OrdersSkeleton />
       </Layout>
     );
   }
@@ -366,21 +516,41 @@ export default function Orders() {
                       </span>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-xl font-bold text-teal mb-1">
-                      £{((order.sale_price || order.products?.selling_price || 0) * order.quantity_sold).toFixed(2)}
-                    </div>
-                    {order.products && (
-                      <div className="text-sm text-green-600 font-medium mb-2">
-                        £{(((order.sale_price || order.products.selling_price) - order.products.cogs) * order.quantity_sold).toFixed(2)} profit
+                  <div className="flex items-center gap-3">
+                    <div className="text-right">
+                      <div className="text-xl font-bold text-teal mb-1">
+                        £{((order.sale_price || order.products?.selling_price || 0) * order.quantity_sold).toFixed(2)}
                       </div>
-                    )}
-                    <Badge 
-                      variant={order.status === 'Completed' ? 'default' : 
-                              order.status === 'Pending' ? 'secondary' : 'destructive'}
-                    >
-                      {order.status}
-                    </Badge>
+                      {order.products && (
+                        <div className="text-sm text-green-600 font-medium mb-2">
+                          £{(((order.sale_price || order.products.selling_price) - order.products.cogs) * order.quantity_sold).toFixed(2)} profit
+                        </div>
+                      )}
+                      <Badge 
+                        variant={order.status === 'Completed' ? 'default' : 
+                                order.status === 'Pending' ? 'secondary' : 'destructive'}
+                      >
+                        {order.status}
+                      </Badge>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleEditOrder(order)}
+                        className="text-teal-600 border-teal-200 hover:bg-teal-50"
+                      >
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => handleDeleteOrder(order.id)}
+                        className="text-red-600 border-red-200 hover:bg-red-50"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </CardContent>
@@ -557,6 +727,162 @@ export default function Orders() {
                     </div>
                   ) : (
                     'Log Sale'
+                  )}
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Edit Sale Modal */}
+        {showEditModal && editingOrder && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+            <div className="bg-white rounded-2xl p-6 w-full max-w-md max-h-[90vh] overflow-y-auto">
+              <h2 className="text-xl font-bold mb-4">Edit Sale</h2>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-1">Product *</label>
+                  <Select value={newOrder.product_id} onValueChange={(value) => {
+                    const selectedProduct = products.find(p => p.id === value);
+                    setNewOrder(prev => ({ 
+                      ...prev, 
+                      product_id: value,
+                      sale_price: selectedProduct?.selling_price || 0
+                    }));
+                  }}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select a product" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {products.map((product) => (
+                        <SelectItem key={product.id} value={product.id}>
+                          <div className="flex flex-col">
+                            <span>{product.name}</span>
+                            <span className="text-xs text-gray-500">
+                              £{product.selling_price} • £{(product.selling_price - product.cogs).toFixed(2)} profit/unit
+                            </span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">Quantity Sold *</label>
+                  <Input
+                    type="number"
+                    min="1"
+                    value={newOrder.quantity_sold}
+                    onChange={(e) => setNewOrder(prev => ({ 
+                      ...prev, 
+                      quantity_sold: parseInt(e.target.value) || 1 
+                    }))}
+                  />
+                </div>
+
+                <div>
+                  <label className="flex items-center space-x-2 text-sm font-medium mb-2">
+                    <input
+                      type="checkbox"
+                      checked={newOrder.useCustomPrice}
+                      onChange={(e) => setNewOrder(prev => ({ 
+                        ...prev, 
+                        useCustomPrice: e.target.checked 
+                      }))}
+                      className="rounded"
+                    />
+                    <span>Use custom sale price</span>
+                  </label>
+                  {newOrder.useCustomPrice && (
+                    <Input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      placeholder="Custom price per unit"
+                      value={newOrder.sale_price}
+                      onChange={(e) => setNewOrder(prev => ({ 
+                        ...prev, 
+                        sale_price: parseFloat(e.target.value) || 0 
+                      }))}
+                    />
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">Sale Date *</label>
+                  <Input
+                    type="date"
+                    value={newOrder.order_date}
+                    onChange={(e) => setNewOrder(prev => ({ 
+                      ...prev, 
+                      order_date: e.target.value 
+                    }))}
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">Channel/Source</label>
+                  <Select value={newOrder.status} onValueChange={(value) => 
+                    setNewOrder(prev => ({ ...prev, status: value }))
+                  }>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Completed">Market Stall</SelectItem>
+                      <SelectItem value="Online">Social Media</SelectItem>
+                      <SelectItem value="Direct">Direct Sale</SelectItem>
+                      <SelectItem value="Craft Fair">Craft Fair</SelectItem>
+                      <SelectItem value="Custom">Custom Order</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {newOrder.product_id && (
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                    <h4 className="font-medium text-blue-900 mb-1">Sale Summary</h4>
+                    <div className="text-sm text-blue-800 space-y-1">
+                      <div className="flex justify-between">
+                        <span>Revenue:</span>
+                        <span>£{((newOrder.useCustomPrice ? newOrder.sale_price : products.find(p => p.id === newOrder.product_id)?.selling_price || 0) * newOrder.quantity_sold).toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Profit:</span>
+                        <span className="font-medium text-green-600">
+                          £{(((newOrder.useCustomPrice ? newOrder.sale_price : products.find(p => p.id === newOrder.product_id)?.selling_price || 0) - (products.find(p => p.id === newOrder.product_id)?.cogs || 0)) * newOrder.quantity_sold).toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="flex gap-3 mt-6">
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    setShowEditModal(false);
+                    setEditingOrder(null);
+                    resetOrderForm();
+                  }}
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  onClick={handleUpdateOrder}
+                  disabled={!newOrder.product_id || loading}
+                  className="flex-1 bg-craft-orange hover:bg-craft-orange/90"
+                >
+                  {loading ? (
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>Updating...</span>
+                    </div>
+                  ) : (
+                    'Update Sale'
                   )}
                 </Button>
               </div>

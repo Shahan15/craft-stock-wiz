@@ -43,6 +43,8 @@ export default function Dashboard() {
   const { user } = useAuth()
   const [lowStockMaterials, setLowStockMaterials] = useState<LowStockMaterial[]>([])
   const [recentOrders, setRecentOrders] = useState<RecentOrder[]>([])
+  const [topProducts, setTopProducts] = useState<any[]>([])
+  const [mostUsedMaterials, setMostUsedMaterials] = useState<any[]>([])
   const [stats, setStats] = useState({
     totalMaterials: 0,
     totalProducts: 0,
@@ -119,6 +121,90 @@ export default function Dashboard() {
         totalProducts: productsCount.count || 0,
         totalOrders: ordersCount.count || 0
       })
+
+      // Fetch top products by profit
+      const { data: topProductsData } = await supabase
+        .from('orders')
+        .select(`
+          quantity_sold,
+          products!inner(name, selling_price, cogs)
+        `)
+        .eq('user_id', user?.id)
+
+      if (topProductsData) {
+        const productStats = (topProductsData as any[]).reduce((acc, order) => {
+          const productName = order.products?.name || 'Unknown'
+          const profit = (order.products?.selling_price - order.products?.cogs) * order.quantity_sold
+          
+          if (!acc[productName]) {
+            acc[productName] = { 
+              name: productName, 
+              total_sold: 0, 
+              profit: 0,
+              margin_percent: 0
+            }
+          }
+          
+          acc[productName].total_sold += order.quantity_sold
+          acc[productName].profit += profit
+          acc[productName].margin_percent = order.products?.selling_price > 0 
+            ? ((order.products?.selling_price - order.products?.cogs) / order.products?.selling_price) * 100 
+            : 0
+          
+          return acc
+        }, {} as Record<string, any>)
+
+        setTopProducts(Object.values(productStats).sort((a: any, b: any) => b.profit - a.profit))
+      }
+
+      // Fetch most used materials
+      const { data: materialUsageData } = await supabase
+        .from('materials')
+        .select(`
+          id,
+          name,
+          current_stock,
+          unit_of_measurement,
+          low_stock_threshold
+        `)
+        .eq('user_id', user?.id)
+
+      if (materialUsageData) {
+        // Calculate usage based on orders and recipes
+        const materialUsage = await Promise.all(
+          materialUsageData.map(async (material) => {
+            const { data: recipeData } = await supabase
+              .from('recipes')
+              .select(`
+                quantity_needed,
+                products!inner(
+                  id,
+                  orders!inner(quantity_sold)
+                )
+              `)
+              .eq('material_id', material.id)
+
+            let totalUsed = 0
+            if (recipeData) {
+              totalUsed = recipeData.reduce((sum, recipe) => {
+                const product = recipe.products as any
+                const ordersForProduct = product?.orders || []
+                const productUsage = ordersForProduct.reduce((orderSum: number, order: any) => 
+                  orderSum + (order.quantity_sold * recipe.quantity_needed), 0
+                )
+                return sum + productUsage
+              }, 0)
+            }
+
+            return {
+              ...material,
+              usage_count: totalUsed
+            }
+          })
+        )
+
+        setMostUsedMaterials(materialUsage.sort((a, b) => b.usage_count - a.usage_count))
+      }
     } catch (error) {
       console.error('Error fetching dashboard data:', error)
     } finally {
@@ -403,6 +489,97 @@ export default function Dashboard() {
           </Card>
         </div>
 
+        {/* Enhanced Dashboard Insights */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Top Performing Products */}
+          <Card className="craft-card p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center">
+                <TrendingUp className="w-5 h-5 text-green-500 mr-2" />
+                Top Products by Profit
+              </h2>
+              <Link to="/analytics">
+                <Button variant="outline" size="sm">
+                  View Analytics
+                </Button>
+              </Link>
+            </div>
+
+            {topProducts.length === 0 ? (
+              <div className="text-center py-8">
+                <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-600 font-medium">No sales data yet</p>
+                <p className="text-gray-500 text-sm">Start selling to see insights!</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {topProducts.slice(0, 3).map((product, index) => (
+                  <div key={product.name} className="p-4 bg-gradient-to-r from-green-50 to-teal-50 border border-green-200 rounded-lg">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-semibold">
+                          #{index + 1}
+                        </span>
+                        <p className="font-medium text-gray-900">{product.name}</p>
+                      </div>
+                      <p className="text-green-600 font-semibold">£{product.profit.toFixed(2)}</p>
+                    </div>
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>{product.total_sold} sold</span>
+                      <span>{product.margin_percent.toFixed(1)}% margin</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Card>
+
+          {/* Most Used Materials */}
+          <Card className="craft-card p-6">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-bold text-gray-900 flex items-center">
+                <Package className="w-5 h-5 text-craft-orange mr-2" />
+                Most Used Materials
+              </h2>
+              <Link to="/materials">
+                <Button variant="outline" size="sm">
+                  Manage Stock
+                </Button>
+              </Link>
+            </div>
+
+            {mostUsedMaterials.length === 0 ? (
+              <div className="text-center py-8">
+                <Package className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                <p className="text-gray-600 font-medium">No usage data yet</p>
+                <p className="text-gray-500 text-sm">Complete some orders to see insights!</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {mostUsedMaterials.slice(0, 3).map((material, index) => (
+                  <div key={material.name} className="p-4 bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-200 rounded-lg">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs bg-orange-100 text-orange-700 px-2 py-1 rounded-full font-semibold">
+                          #{index + 1}
+                        </span>
+                        <p className="font-medium text-gray-900">{material.name}</p>
+                      </div>
+                      <p className="text-orange-600 font-semibold">{material.usage_count} used</p>
+                    </div>
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>{material.current_stock} {material.unit_of_measurement} left</span>
+                      <span className={material.current_stock <= material.low_stock_threshold ? 'text-red-600 font-medium' : 'text-green-600'}>
+                        {material.current_stock <= material.low_stock_threshold ? 'Low stock' : 'In stock'}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Card>
+        </div>
+
         {/* Quick Actions */}
         <Card className="craft-card p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-6">Quick Actions</h2>
@@ -431,7 +608,7 @@ export default function Dashboard() {
               </div>
             </Link>
             
-            <Link to="/settings">
+            <Link to="/analytics">
               <div className="p-4 text-center hover:bg-gray-50 rounded-lg transition-colors border border-gray-200">
                 <TrendingUp className="w-8 h-8 text-teal mx-auto mb-2" />
                 <p className="font-medium text-gray-900">View Reports</p>
